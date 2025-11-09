@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]  # Fixed typo (was "standing")
+
+# For authentication
+python-multipart
+python-jose[cryptography]
+passlib[bcrypt]
+
+# For database
+sqlalchemy
+psycopg2-binary
+
+# For environment variables
+python-dotenv
+pydantic[email]  # This only works in Pydantic v1. In Pydantic v2, use "pydantic" instead.
+requests
+apscheduler

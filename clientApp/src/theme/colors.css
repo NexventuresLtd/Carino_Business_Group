@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* Custom Dark Mode Variant */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================
+   CARINO BUSINESS GROUP THEME
+   ============================ */
+@theme {
+  --color-primary: #d4af37;      /* Gold – main brand color */
+  --color-secondary: #000000;    /* Black – supporting brand color */
+  --color-background: #ffffff;   /* White background for clarity */
+  --color-text: #000000;         /* Standard black text */
+  --color-muted: #6b7280;        /* Neutral gray for muted UI elements */
+  --color-accent: #f5d67b;       /* Light gold accent for highlights */
+}
+
+/* ============================
+   DARK MODE THEME VARIANTS
+   ============================ */
+.dark {
+  --color-primary: #e0c04c;      /* Softer gold for dark backgrounds */
+  --color-secondary: #ffffff;    /* White text or highlights on dark bg */
+  --color-background: #0a0a0a;   /* Deep black background */
+  --color-text: #f5f5f5;         /* Light text for readability */
+  --color-muted: #999999;        /* Muted gray for secondary info */
+  --color-accent: #d4af37;       /* Classic gold accent retained */
+}
