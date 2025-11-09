@@ -206,7 +206,7 @@ const PortfolioPopup = ({ project, isOpen, onClose }: any) => {
                             </div>
 
                             {/* Results Summary */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                            <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
                                 <div className="bg-gray-50 rounded-lg p-4 text-center border border-gray-100">
                                     <TrendingUp className="w-8 h-8 text-[#d4af37] mx-auto mb-2" />
                                     <div className="text-2xl font-bold text-gray-900">{project.results.saved}</div>
