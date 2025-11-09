@@ -115,29 +115,29 @@ const PremiumFooter = () => {
             icon: Linkedin, 
             href: "#", 
             label: "LinkedIn",
-            gradient: "from-blue-600 to-blue-800",
-            hover: "hover:from-blue-500 hover:to-blue-700"
+            gradient: "from-black-600 to-black-800",
+            hover: "hover:from-black-500 hover:to-black-700"
         },
         { 
             icon: Twitter, 
             href: "#", 
             label: "Twitter",
-            gradient: "from-sky-400 to-sky-600",
-            hover: "hover:from-sky-300 hover:to-sky-500"
+            gradient: "from-black-400 to-black-600",
+            hover: "hover:from-black-300 hover:to-black-500"
         },
         { 
             icon: Facebook, 
             href: "#", 
             label: "Facebook",
-            gradient: "from-blue-500 to-blue-700",
-            hover: "hover:from-blue-400 hover:to-blue-600"
+            gradient: "from-black-500 to-black-700",
+            hover: "hover:from-black-400 hover:to-black-600"
         },
         { 
             icon: Instagram, 
             href: "#", 
             label: "Instagram",
-            gradient: "from-purple-500 to-pink-500",
-            hover: "hover:from-purple-400 hover:to-pink-400"
+            gradient: "from-black-500 to-black-500",
+            hover: "hover:from-black-400 hover:to-black-400"
         }
     ];
 
