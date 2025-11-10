@@ -10,6 +10,7 @@ import ServicesPage from "./pages/services";
 import PortfolioSection from "./pages/portoflio";
 import ContactPage from "./pages/contact";
 import Dashboard from "./pages/dashboardmain";
+import Login from "./pages/login";
 
 
 
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/about" element={<AboutUS />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/login" element={<Login />} />
 
         <Route path="*" element={<PageNoFound />} />
       </Routes>
