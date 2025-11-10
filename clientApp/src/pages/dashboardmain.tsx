@@ -220,7 +220,7 @@ const Navbar: React.FC<{
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-30">
+    <nav className="bg-white sticky top-0 z-30">
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-4">
           <button
@@ -1109,14 +1109,14 @@ const Dash: React.FC = () => {
         onMobileClose={handleMobileClose}
       />
 
-      <div className={`flex-1 flex flex-col gap-3 min-w-0 transition-all duration-300 p-2 ${isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-70'}`}>
+      <div className={`flex-1 flex flex-col gap-3 min-w-0 transition-all duration-300  ${isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-70'}`}>
         <Navbar
           onMenuClick={handleMobileMenuClick}
           activeSection={activeSection}
           user={user}
           onLogout={handleLogout}
         />
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto p-5">
           <MainContent
             activeSection={activeSection}
           />
