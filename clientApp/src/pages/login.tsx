@@ -122,13 +122,13 @@ const Login: React.FC = () => {
               </button>
               <button
                 onClick={() => fillDemoCredentials('manager')}
-                className="px-3 py-4 text-xs bg-primary text-white rounded-lg hover:bg-primary transition-colors"
+                className="px-3 hidden py-4 text-xs bg-primary text-white rounded-lg hover:bg-primary transition-colors"
               >
                 Manager
               </button>
               <button
                 onClick={() => fillDemoCredentials('user')}
-                className="px-3 py-4 text-xs bg-primary text-white rounded-lg hover:bg-primary transition-colors"
+                className="px-3 hidden py-4 text-xs bg-primary text-white rounded-lg hover:bg-primary transition-colors"
               >
                 User
               </button>
