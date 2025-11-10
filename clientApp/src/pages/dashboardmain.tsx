@@ -14,7 +14,6 @@ import {
   Building2,
   ChevronRight,
   ChevronLeft,
-
   CheckCircle,
   Edit,
   Trash2,
@@ -480,6 +479,137 @@ const ServiceModal: React.FC<{
   );
 };
 
+const ClientModal: React.FC<{
+  client: Client | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (client: Omit<Client, 'id'>) => void;
+}> = ({ client, isOpen, onClose, onSave }) => {
+  const [formData, setFormData] = useState<{
+    name: string;
+    type: 'startup' | 'sme' | 'ngo' | 'cooperative' | 'enterprise';
+    contact: string;
+    email: string;
+    projects: number;
+  }>({
+    name: '',
+    type: 'sme',
+    contact: '',
+    email: '',
+    projects: 0
+  });
+
+  useEffect(() => {
+    if (client) {
+      setFormData({
+        name: client.name,
+        type: client.type,
+        contact: client.contact,
+        email: client.email,
+        projects: client.projects
+      });
+    } else {
+      setFormData({
+        name: '',
+        type: 'sme',
+        contact: '',
+        email: '',
+        projects: 0
+      });
+    }
+  }, [client]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave(formData);
+    onClose();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/40 bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+        <h3 className="text-xl font-bold text-gray-900 mb-4">
+          {client ? 'Edit Client' : 'Add New Client'}
+        </h3>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Client Name</label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37]"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Client Type</label>
+            <select
+              value={formData.type}
+              onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value as Client['type'] }))}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37]"
+            >
+              <option value="startup">Startup</option>
+              <option value="sme">SME</option>
+              <option value="ngo">NGO</option>
+              <option value="cooperative">Cooperative</option>
+              <option value="enterprise">Enterprise</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Contact Number</label>
+            <input
+              type="text"
+              value={formData.contact}
+              onChange={(e) => setFormData(prev => ({ ...prev, contact: e.target.value }))}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37]"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37]"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Number of Projects</label>
+            <input
+              type="number"
+              value={formData.projects}
+              onChange={(e) => setFormData(prev => ({ ...prev, projects: parseInt(e.target.value) || 0 }))}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37]"
+              min="0"
+              required
+            />
+          </div>
+          <div className="flex gap-3 justify-end pt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-[#d4af37] text-white rounded-lg hover:bg-[#b8941f]"
+            >
+              {client ? 'Update' : 'Create'} Client
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 // Main Content Component
 const MainContent: React.FC<{ activeSection: string }> = ({
   activeSection,
@@ -487,6 +617,7 @@ const MainContent: React.FC<{ activeSection: string }> = ({
   const [services, setServices] = useState<Service[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
   const [serviceModal, setServiceModal] = useState<{ isOpen: boolean; service: Service | null }>({ isOpen: false, service: null });
+  const [clientModal, setClientModal] = useState<{ isOpen: boolean; client: Client | null }>({ isOpen: false, client: null });
   const [searchTerm, setSearchTerm] = useState('');
 
   // Load data from localStorage
@@ -588,16 +719,21 @@ const MainContent: React.FC<{ activeSection: string }> = ({
   };
 
   // Client CRUD operations
-  const handleCreateClient = () => {
+  const handleCreateClient = (clientData: Omit<Client, 'id'>) => {
     const newClient: Client = {
-      id: Date.now().toString(),
-      name: 'New Client',
-      type: 'sme',
-      contact: '+250 788 000 000',
-      email: 'client@example.rw',
-      projects: 0
+      ...clientData,
+      id: Date.now().toString()
     };
     const updatedClients = [...clients, newClient];
+    setClients(updatedClients);
+    localStorage.setItem('carino-clients', JSON.stringify(updatedClients));
+  };
+
+  const handleUpdateClient = (clientData: Omit<Client, 'id'>) => {
+    if (!clientModal.client) return;
+    const updatedClients = clients.map(c =>
+      c.id === clientModal.client!.id ? { ...clientData, id: clientModal.client!.id } : c
+    );
     setClients(updatedClients);
     localStorage.setItem('carino-clients', JSON.stringify(updatedClients));
   };
@@ -681,7 +817,7 @@ const MainContent: React.FC<{ activeSection: string }> = ({
                   Add New Service
                 </button>
                 <button
-                  onClick={handleCreateClient}
+                  onClick={() => setClientModal({ isOpen: true, client: null })}
                   className="border-2 border-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 hover:text-white transition-colors"
                 >
                   Add New Client
@@ -750,7 +886,7 @@ const MainContent: React.FC<{ activeSection: string }> = ({
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">Recent Clients</h3>
                   <button
-                    onClick={handleCreateClient}
+                    onClick={() => setClientModal({ isOpen: true, client: null })}
                     className="text-[#d4af37] hover:text-[#b8941f] transition-colors flex items-center gap-2"
                   >
                     <Plus className="w-4 h-4" />
@@ -899,7 +1035,7 @@ const MainContent: React.FC<{ activeSection: string }> = ({
                   />
                 </div>
                 <button
-                  onClick={handleCreateClient}
+                  onClick={() => setClientModal({ isOpen: true, client: null })}
                   className="bg-[#d4af37] text-white px-4 py-2 rounded-lg hover:bg-[#b8941f] transition-colors flex items-center gap-2"
                 >
                   <Plus className="w-4 h-4" />
@@ -916,6 +1052,12 @@ const MainContent: React.FC<{ activeSection: string }> = ({
                       <Users className="w-6 h-6 text-gray-900" />
                     </div>
                     <div className="flex gap-2">
+                      <button
+                        onClick={() => setClientModal({ isOpen: true, client })}
+                        className="p-2 text-gray-400 hover:text-[#d4af37] hover:bg-[#f5d67b] rounded-lg transition-colors"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </button>
                       <button
                         onClick={() => handleDeleteClient(client.id)}
                         className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -956,7 +1098,7 @@ const MainContent: React.FC<{ activeSection: string }> = ({
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">No clients found</h3>
                 <p className="text-gray-600 mb-4">Get started by adding your first client</p>
                 <button
-                  onClick={handleCreateClient}
+                  onClick={() => setClientModal({ isOpen: true, client: null })}
                   className="bg-[#d4af37] text-white px-6 py-3 rounded-lg hover:bg-[#b8941f] transition-colors"
                 >
                   Add Client
@@ -994,7 +1136,20 @@ const MainContent: React.FC<{ activeSection: string }> = ({
                       }`}>
                       {client.type}
                     </span>
-                    <span className="text-sm text-gray-500">{client.projects} projects</span>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setClientModal({ isOpen: true, client })}
+                        className="p-2 text-gray-400 hover:text-[#d4af37] hover:bg-[#f5d67b] rounded-lg transition-colors"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteClient(client.id)}
+                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -1006,7 +1161,7 @@ const MainContent: React.FC<{ activeSection: string }> = ({
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">No portfolio items</h3>
                 <p className="text-gray-600 mb-4">Add clients to showcase your portfolio</p>
                 <button
-                  onClick={handleCreateClient}
+                  onClick={() => setClientModal({ isOpen: true, client: null })}
                   className="bg-[#d4af37] text-white px-6 py-3 rounded-lg hover:bg-[#b8941f] transition-colors"
                 >
                   Add Client
@@ -1042,6 +1197,14 @@ const MainContent: React.FC<{ activeSection: string }> = ({
         isOpen={serviceModal.isOpen}
         onClose={() => setServiceModal({ isOpen: false, service: null })}
         onSave={serviceModal.service ? handleUpdateService : handleCreateService}
+      />
+
+      {/* Client Modal */}
+      <ClientModal
+        client={clientModal.client}
+        isOpen={clientModal.isOpen}
+        onClose={() => setClientModal({ isOpen: false, client: null })}
+        onSave={clientModal.client ? handleUpdateClient : handleCreateClient}
       />
     </>
   );
