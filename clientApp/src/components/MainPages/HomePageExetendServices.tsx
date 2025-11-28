@@ -1,36 +1,29 @@
 // components/ExtendedServicesSection.jsx
 import { motion } from 'framer-motion';
-import { Users, Shield, Lightbulb, BookOpen, FileText } from 'lucide-react';
+import { Shield, Lightbulb, BookOpen, Calculator } from 'lucide-react';
 
 const ExtendedServicesSection = () => {
     const extendedServices = [
         {
             number: "01",
-            title: "Training & Capacity Building",
-            description: "Software training (QuickBooks, Sage, Excel), taxation principles, accounting for cooperatives and NGOs.",
+            title: "The Foundation (Compliance)",
+            description: " Ensure accuracy and peace of mind with smart tax solutions, precise bookkeeping, and external audit support to keep your business audit-compliant.",
             score: "40+ TRAINED",
-            icon: Users
+            icon: Calculator
         },
         {
             number: "02",
-            title: "Management Consultancy",
-            description: "Financial system optimization, budget creation and controls, operational efficiency reviews.",
+            title: "Financial Compliance",
+            description: "Ensure accuracy and peace of mind with smart tax solutions, precise bookkeeping, and external audit support to keep your business audit-compliant.",
             score: "95% EFFICIENCY",
             icon: Shield
         },
         {
             number: "03",
-            title: "Market Research & Polling",
-            description: "Research-driven decision support, consumer behavior analysis, financial forecasting.",
+            title: "The People (Capacity)",
+            description: "Empower modern accountants and entrepreneurs with practical skills training and development to master financial systems and strategies.",
             score: "100M+ FUNDED",
             icon: Lightbulb
-        },
-        {
-            number: "04",
-            title: "Business Plan Development",
-            description: "Structuring investor-ready business plans, market research, financial modeling, and KPI alignment.",
-            score: "50+ PLANS",
-            icon: FileText
         }
     ];
 
@@ -45,25 +38,24 @@ const ExtendedServicesSection = () => {
     return (
         <div className="bg-white">
             {/* Extended Services Section */}
-            <div className="relative py-20 bg-gray-50">
-                <div className="max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="relative z-20 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="text-center mb-16"
+                        className="text-center mb-16 hidden"
                     >
                         <h2 className="text-3xl sm:text-4xl font-bold text-[#000000] mb-4">
                             Comprehensive Financial Solutions
                         </h2>
                         <p className="text-lg text-[#6b7280] max-w-2xl mx-auto">
-                            Beyond core services, we offer specialized solutions to ensure your business 
+                            Beyond core services, we offer specialized solutions to ensure your business
                             thrives in every aspect of financial management.
                         </p>
                     </motion.div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 ">
                         {extendedServices.map((service, index) => {
                             const IconComponent = service.icon;
                             return (
@@ -73,7 +65,7 @@ const ExtendedServicesSection = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.1, duration: 0.5 }}
                                     viewport={{ once: true }}
-                                    className="bg-[#ffffff] rounded-lg shadow-2xl p-6 sm:p-8 hover:shadow-3xl transition-all group hover:-translate-y-2"
+                                    className="bg-[#ffffff] rounded-lg shadow-2xl p-6 sm:p-8 hover:shadow-3xl transition-all -translate-y-40 group hover:-translate-y-30"
                                 >
                                     <div className="flex flex-col items-center text-center">
                                         <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-[#f5d67b] flex items-center justify-center mb-4 sm:mb-6 group-hover:border-[#d4af37] transition-colors">
@@ -105,7 +97,7 @@ const ExtendedServicesSection = () => {
                 </div>
             </div>
             {/* CTA Section */}
-            <div className="relative py-20 bg-gray-900">
+            <div className="relative py-20 bg-primary">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -116,14 +108,14 @@ const ExtendedServicesSection = () => {
                         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                             Ready to Streamline Your Financial Future?
                         </h2>
-                        <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-                            Join over 30 businesses, cooperatives, and NGOs who trust Carino Business Group 
+                        <p className="text-lg text-white mb-8 max-w-2xl mx-auto">
+                            Join over 30 businesses, cooperatives, and NGOs who trust Carino Business Group
                             for their financial management and business development needs.
                         </p>
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="bg-[#d4af37] text-[#000000] px-6 sm:px-8 py-3 sm:py-4 rounded-md font-semibold hover:bg-[#f5d67b] transition-all shadow-lg hover:shadow-xl uppercase tracking-wide text-sm sm:text-base"
+                            className="bg-[white] text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-md font-semibold hover:bg-[#f5d67b] transition-all shadow-lg hover:shadow-xl uppercase tracking-wide text-sm sm:text-base"
                         >
                             Start Your Journey Today
                         </motion.button>
@@ -144,7 +136,7 @@ const ExtendedServicesSection = () => {
                             Trusted by Leading Businesses
                         </h2>
                         <p className="text-lg text-[#6b7280] max-w-2xl mx-auto">
-                            We're proud to have supported these amazing organizations in achieving 
+                            We're proud to have supported these amazing organizations in achieving
                             their financial goals and compliance requirements.
                         </p>
                     </motion.div>

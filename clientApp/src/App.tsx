@@ -40,6 +40,7 @@ export default function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/portfolio" element={<PortfolioSection />} />
+        <Route path="/portfolio/:blogSlug?" element={<PortfolioSection />} />
         <Route path="/about" element={<AboutUS />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/contact" element={<ContactPage />} />

@@ -52,10 +52,10 @@ async def send_email(details: EmailSchema, db: db_dependency):
         raise HTTPException(status_code=404, detail="Email Id Not Found")
 
     otp_subjet = {
-        "login": "Centerpiece Dashboard - Login Verification Code",
-        "email": "Centerpiece Dashboard - Account Verification",
-        "reset": "Centerpiece Dashboard - Password Reset Code",
-        "Info": "Centerpiece Dashboard - Security Access Code",
+        "login": "Carino Business Group - Login Verification Code",
+        "email": "Carino Business Group - Account Verification",
+        "reset": "Carino Business Group - Password Reset Code",
+        "Info": "Carino Business Group - Security Access Code",
     }
     
     otp = generate_random_otp(6)  # Generates a 6-digit alphanumeric OTP
@@ -76,12 +76,12 @@ async def send_email(details: EmailSchema, db: db_dependency):
     db.commit()
     db.refresh(new_otp)
 
-    heading = "Welcome to Centerpiece Dashboard!"
+    heading = "Welcome to Carino Business Group!"
     sub = otp_subjet[purpose]
     
     body = f"""
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #2c3e50; text-align: center;">Centerpiece Dashboard Security Code</h2>
+        <h2 style="color: #2c3e50; text-align: center;">Carino Business Group Security Code</h2>
         
         <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0;">
             <h1 style="color: #e74c3c; font-size: 32px; letter-spacing: 3px; margin: 0;">
@@ -90,26 +90,16 @@ async def send_email(details: EmailSchema, db: db_dependency):
         </div>
         
         <p style="color: #7f8c8d; line-height: 1.6;">
-            This is your verification code for <strong>{purpose}</strong> on Centerpiece Dashboard.
+            This is your verification code for <strong>{purpose}</strong> on Carino Business Group.
         </p>
         
-        <div style="background: #fff3cd; padding: 15px; border-radius: 5px; border-left: 4px solid #ffc107;">
-            <p style="color: #856404; margin: 0;">
-                ⚠️ <strong>Security Notice:</strong> Never share this code with anyone. 
-                Our team will never ask for your verification code.
-            </p>
-        </div>
         
         <p style="color: #7f8c8d; font-size: 14px; margin-top: 20px;">
             This code will expire in 10 minutes. If you didn't request this code, 
             please ignore this email or contact our support team immediately.
         </p>
         
-        <div style="border-top: 2px solid #ecf0f1; margin-top: 30px; padding-top: 20px; text-align: center;">
-            <p style="color: #95a5a6; font-size: 12px;">
-                Centerpiece Group Ltd · Financial Management System
-            </p>
-        </div>
+
     </div>
     """
     

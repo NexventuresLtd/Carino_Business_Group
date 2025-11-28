@@ -7,11 +7,10 @@ from models.userModels import Users
 from schemas.schemas import (
     UserResponse, 
     UpdateUserRequest, 
-    CreateTeamLeadRequest,
     UpdateUserTypeRequest
 )
-from models.EventsModel import Event
-from db.VerifyToken import get_current_user
+
+from db.VerifyToken import user_dependency
 from passlib.context import CryptContext
 from sqlalchemy import func, or_
 
@@ -22,30 +21,17 @@ bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 @router.get("/", response_model=List[UserResponse])
 async def get_all_users(
     db: db_dependency,
-    # current_user: get_current_user,
+    # current_user: user_dependency,
     skip: int = 0,
     limit: int = 100
 ):
-    results = (
-        db.query(Users, func.count(Event.id).label("event_count"))
-        .outerjoin(Event, or_(Users.id == Event.team_id, Users.id == Event.sales_id))
-        .group_by(Users.id)
-        .offset(skip)
-        .limit(limit)
-        .all()
-    )
+    results = db.query(Users).offset(skip).limit(limit).all()
 
-    users = []
-    for user, count in results:
-        users.append({
-            "id": user.id,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "email": user.email,
-            "userType": user.userType,
-            "phone": user.phone,
-            "event_count": count  
-        })
+   
+    users ={
+        "total": len(results),
+        "users": results
+        }
 
     return users
 
@@ -55,7 +41,7 @@ async def get_all_users(
 async def get_user(
     user_id: int,
     db: db_dependency,
-    # current_user: get_current_user
+    # current_user: user_dependency
 ):
     user = db.query(Users).filter(Users.id == user_id).first()
     if not user:
@@ -67,7 +53,7 @@ async def update_user(
     user_id: int,
     user_update: UpdateUserRequest,
     db: db_dependency,
-    # current_user: get_current_user
+    # current_user: user_dependency
 ):
     user = db.query(Users).filter(Users.id == user_id).first()
     if not user:
@@ -96,7 +82,7 @@ async def update_user(
 async def delete_user(
     user_id: int,
     db: db_dependency,
-    # current_user: get_current_user
+    # current_user: user_dependency
 ):
     user = db.query(Users).filter(Users.id == user_id).first()
     if not user:
@@ -106,117 +92,6 @@ async def delete_user(
     db.commit()
     return {"message": "User deleted successfully"}
 
-# Add team lead (non-admin user)
-@router.post("/team-lead", response_model=UserResponse)
-async def create_team_lead(
-    team_lead_data: CreateTeamLeadRequest,
-    db: db_dependency,
-    # current_user: get_current_user
-):
-    # Check if email already exists
-    existing_user = db.query(Users).filter(Users.email == team_lead_data.email).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    
-    # Check if phone already exists
-    existing_user = db.query(Users).filter(Users.phone == team_lead_data.phone).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="phone already registered")
-    
-    # Create team lead with userType = "team_lead"
-    team_lead = Users(
-        first_name=team_lead_data.first_name,
-        last_name=team_lead_data.last_name,
-        email=team_lead_data.email,
-        phone=team_lead_data.phone,
-        userType="team_lead",
-        password=bcrypt_context.hash(team_lead_data.password)
-    )
-    
-    db.add(team_lead)
-    db.commit()
-    db.refresh(team_lead)
-    
-    return team_lead
-@router.post("/sales-lead", response_model=UserResponse)
-async def create_team_lead(
-    team_lead_data: CreateTeamLeadRequest,
-    db: db_dependency,
-    # current_user: get_current_user
-):
-    # Check if email already exists
-    existing_user = db.query(Users).filter(Users.email == team_lead_data.email).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    
-    # Create team lead with userType = "team_lead"
-    team_lead = Users(
-        first_name=team_lead_data.first_name,
-        last_name=team_lead_data.last_name,
-        email=team_lead_data.email,
-        userType="sales",
-        phone=team_lead_data.phone,
-        password=bcrypt_context.hash(team_lead_data.password)
-    )
-    
-    db.add(team_lead)
-    db.commit()
-    db.refresh(team_lead)
-    
-    return team_lead
-@router.post("/super_sales", response_model=UserResponse)
-async def create_super_sales(
-    super_sales_data: CreateTeamLeadRequest,
-    db: db_dependency,
-    # current_user: get_current_user
-):
-    # Check if email already exists
-    existing_user = db.query(Users).filter(Users.email == super_sales_data.email).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    
-    # Create team lead with userType = "team_lead"
-    team_lead = Users(
-        first_name=super_sales_data.first_name,
-        last_name=super_sales_data.last_name,
-        email=super_sales_data.email,
-        userType="super_sales",
-        phone=super_sales_data.phone,
-        password=bcrypt_context.hash(super_sales_data.password)
-    )
-    
-    db.add(team_lead)
-    db.commit()
-    db.refresh(team_lead)
-    
-    return team_lead
-
-@router.post("/admin-lead", response_model=UserResponse)
-async def create_team_lead(
-    team_lead_data: CreateTeamLeadRequest,
-    db: db_dependency,
-    # current_user: get_current_user
-):
-    # Check if email already exists
-    existing_user = db.query(Users).filter(Users.email == team_lead_data.email).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    
-    # Create team lead with userType = "team_lead"
-    team_lead = Users(
-        first_name=team_lead_data.first_name,
-        last_name=team_lead_data.last_name,
-        email=team_lead_data.email,
-        phone=team_lead_data.phone,
-        userType="desange",
-        password=bcrypt_context.hash(team_lead_data.password)
-    )
-    
-    db.add(team_lead)
-    db.commit()
-    db.refresh(team_lead)
-    
-    return team_lead
 
 # Update user type
 @router.patch("/{user_id}/user-type", response_model=UserResponse)
@@ -224,14 +99,14 @@ async def update_user_type(
     user_id: int,
     user_type_data: UpdateUserTypeRequest,
     db: db_dependency,
-    # current_user: get_current_user
+    # current_user: user_dependency
 ):
     user = db.query(Users).filter(Users.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
     # Validate user type
-    valid_user_types = ["sales", "team_lead", "desange"]
+    valid_user_types = ["admin",]
     if user_type_data.userType not in valid_user_types:
         raise HTTPException(
             status_code=400, 
@@ -253,25 +128,16 @@ async def get_users_by_type(
     limit: int = 100,
 ):
     results = (
-        db.query(Users, func.count(Event.id).label("event_count"))
-        .outerjoin(Event, or_(Users.id == Event.team_id,Users.id == Event.sales_id))
+        db.query(Users)
         .filter(Users.userType == user_type)
-        .group_by(Users.id)
         .offset(skip)
         .limit(limit)
         .all()
     )
-
-    users = []
-    for user, count in results:
-        users.append({
-            "id": user.id,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "email": user.email,
-            "userType": user.userType,
-            "phone": user.phone,
-            "event_count": count,
-        })
+    users = {
+        "total": len(results),
+        "users": results
+    }
+   
 
     return users

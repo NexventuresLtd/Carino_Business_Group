@@ -1,365 +1,487 @@
 // PortfolioSection.jsx
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
-    X, ExternalLink, Users, TrendingUp, Target, Award,
-    Calendar, BarChart3, CheckCircle, ArrowRight, 
-    DollarSign, Clock, UserCheck
+    Search, Calendar, User, ArrowLeft, Share2, Clock,
+    TrendingUp, Users, BookOpen, Filter, Volume2, VolumeX
 } from 'lucide-react';
 import PremiumFooter from '../components/footer';
 import Navbar from '../components/navbar';
+import mainAxios from '../Instance/mainAxios';
 
-// Portfolio Data with Images
-const portfolioData = [
-    {
-        id: 1,
-        title: "Agricultural Cooperative Audit Readiness",
-        client: "Rwanda Farmers Cooperative Union",
-        category: "Audit & Compliance",
-        image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80",
-        duration: "3 Months",
-        results: {
-            saved: "2.5M RWF",
-            achieved: "100% Compliance",
-            impact: "5 Cooperatives"
-        },
-        challenge: "Multiple agricultural cooperatives struggling with financial documentation and audit compliance, risking their operational certificates.",
-        solution: "Implemented comprehensive accounting systems, trained staff on proper record-keeping, and prepared complete audit documentation.",
-        outcomes: [
-            "Achieved 100% audit compliance for all cooperatives",
-            "Saved 2.5M RWF in potential penalties",
-            "Trained 25 cooperative accountants",
-            "Streamlined financial reporting processes"
-        ],
-        testimonial: "Carino Group transformed our financial operations. We passed our external audit with zero findings for the first time."
-    },
-    {
-        id: 2,
-        title: "Tax Optimization for Construction Company",
-        client: "Favorite Construction Technology Ltd",
-        category: "Tax Consultancy",
-        image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80",
-        duration: "6 Months",
-        results: {
-            saved: "8M RWF",
-            achieved: "95% Optimization",
-            impact: "Ongoing Partnership"
-        },
-        challenge: "Construction company facing significant tax penalties due to improper VAT and WHT declarations across multiple projects.",
-        solution: "Conducted comprehensive tax health check, implemented proper accounting systems, and negotiated with RRA for penalty reduction.",
-        outcomes: [
-            "Reduced tax liabilities by 8M RWF",
-            "Implemented automated tax compliance systems",
-            "Resolved all pending tax disputes",
-            "Established ongoing tax advisory relationship"
-        ],
-        testimonial: "The tax savings alone paid for their services ten times over. Professional and highly effective."
-    },
-    {
-        id: 3,
-        title: "Business Plan for Tech Startup Funding",
-        client: "Inuma Technology",
-        category: "Business Development",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80",
-        duration: "2 Months",
-        results: {
-            saved: "50M RWF",
-            achieved: "Funding Secured",
-            impact: "Startup Launched"
-        },
-        challenge: "Tech startup with innovative product but lacking professional business plan and financial projections to attract investors.",
-        solution: "Developed comprehensive business plan with market analysis, financial projections, and investor pitch deck.",
-        outcomes: [
-            "Secured 50M RWF in seed funding",
-            "Developed 5-year financial projections",
-            "Created investor-ready pitch materials",
-            "Structured revenue model and KPIs"
-        ],
-        testimonial: "Their business plan was instrumental in securing our first major investment. Exceptional work!"
-    },
-    {
-        id: 4,
-        title: "Accounting Software Implementation & Training",
-        client: "Multiple SMEs & NGOs",
-        category: "Training & Capacity Building",
-        image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80",
-        duration: "Ongoing",
-        results: {
-            saved: "Time & Efficiency",
-            achieved: "40+ Trained",
-            impact: "15 Organizations"
-        },
-        challenge: "Multiple organizations using manual accounting systems leading to errors, delays, and compliance issues.",
-        solution: "Implemented QuickBooks and Sage accounting software with comprehensive staff training and ongoing support.",
-        outcomes: [
-            "Trained 40+ accountants and administrators",
-            "Reduced accounting processing time by 70%",
-            "Eliminated manual errors in financial reporting",
-            "Enabled real-time financial monitoring"
-        ],
-        testimonial: "The training transformed how we handle our finances. We're now more efficient and accurate than ever."
-    },
-    {
-        id: 5,
-        title: "Financial System Overhaul for Manufacturing",
-        client: "T&U Hardware Store Ltd",
-        category: "Management Consultancy",
-        image: "https://images.unsplash.com/photo-1581094794329-cdcce89df61e?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80",
-        duration: "4 Months",
-        results: {
-            saved: "15% Costs",
-            achieved: "System Optimized",
-            impact: "Revenue Growth"
-        },
-        challenge: "Manufacturing company with disorganized financial systems affecting inventory management and profitability.",
-        solution: "Redesigned financial workflows, implemented inventory management systems, and established performance metrics.",
-        outcomes: [
-            "Reduced operational costs by 15%",
-            "Improved inventory turnover by 25%",
-            "Implemented automated reporting systems",
-            "Enhanced cash flow management"
-        ],
-        testimonial: "The system overhaul gave us clarity and control over our finances. Highly recommended for any growing business."
-    },
-    {
-        id: 6,
-        title: "Market Research for Retail Expansion",
-        client: "KAN IMPORT & EXPORT LTD",
-        category: "Market Research",
-        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80",
-        duration: "3 Months",
-        results: {
-            saved: "Investment Risk",
-            achieved: "Data-Driven Decision",
-            impact: "Successful Expansion"
-        },
-        challenge: "Import/export company planning expansion but lacking market data and consumer insights for informed decision-making.",
-        solution: "Conducted comprehensive market research, competitor analysis, and consumer behavior studies.",
-        outcomes: [
-            "Identified optimal market entry strategy",
-            "Provided detailed competitor analysis",
-            "Forecasted market demand accurately",
-            "Supported 100M RWF expansion decision"
-        ],
-        testimonial: "The research gave us confidence in our expansion plans. Data-driven insights made all the difference."
-    }
-];
+
+// Blog Interface
+interface Blog {
+    id: number;
+    image: string;
+    title: string;
+    subtitle: string;
+    mainText: string;
+    user_id: number;
+    creator_first_name: string;
+    creator_last_name: string;
+    created_at: string;
+}
+
+// Text-to-Speech Hook
+const useTextToSpeech = () => {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
+    const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+    const speak = (text: string) => {
+        if (typeof window === 'undefined' || !window.speechSynthesis) {
+            console.warn('Text-to-speech not supported in this browser');
+            return;
+        }
+
+        // Stop any current speech
+        window.speechSynthesis.cancel();
+
+        // Create new utterance
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+
+        utterance.onend = () => {
+            setIsPlaying(false);
+            setIsPaused(false);
+        };
+
+        utterance.onpause = () => {
+            setIsPaused(true);
+        };
+
+        utterance.onresume = () => {
+            setIsPaused(false);
+        };
+
+        utteranceRef.current = utterance;
+        window.speechSynthesis.speak(utterance);
+        setIsPlaying(true);
+        setIsPaused(false);
+    };
+
+    const pause = () => {
+        if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.pause();
+            setIsPaused(true);
+        }
+    };
+
+    const resume = () => {
+        if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+            setIsPaused(false);
+        }
+    };
+
+    const stop = () => {
+        window.speechSynthesis.cancel();
+        setIsPlaying(false);
+        setIsPaused(false);
+    };
+
+    const toggle = (text: string) => {
+        if (isPlaying) {
+            if (isPaused) {
+                resume();
+            } else {
+                pause();
+            }
+        } else {
+            speak(text);
+        }
+    };
+
+    return {
+        isPlaying,
+        isPaused,
+        speak,
+        pause,
+        resume,
+        stop,
+        toggle
+    };
+};
 
 // Components
-const PortfolioPopup = ({ project, isOpen, onClose }: any) => {
-    if (!isOpen || !project) return null;
+const BlogCard = ({ blog, onClick }: any) => {
+    const formatDate = (dateString: string) => {
+        return new Date(dateString).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    };
+
+    const stripHtml = (html: string) => {
+        const tmp = document.createElement('DIV');
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || '';
+    };
+
+    const truncateText = (text: string, length: number) => {
+        const plainText = stripHtml(text);
+        return plainText.length > length ? plainText.substring(0, length) + '...' : plainText;
+    };
 
     return (
-        <AnimatePresence>
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4"
-                onClick={onClose}
-            >
-                <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.9, opacity: 0 }}
-                    className="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto"
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <div className="relative">
-                        {/* Header Image */}
-                        <div className="h-64 md:h-80 relative">
-                            <img
-                                src={project.image}
-                                alt={project.title}
-                                className="w-full h-full object-cover rounded-t-lg"
-                            />
-                            <div className="absolute inset-0 bg-black/40 rounded-t-lg"></div>
-                            <button
-                                onClick={onClose}
-                                className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors bg-black/30 rounded-full p-1"
-                            >
-                                <X className="w-6 h-6" />
-                            </button>
+        <motion.article
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-lg overflow-hidden border border-gray-100 hover:border-[#d4af37]/30 transition-all  cursor-pointer group shadow-sm hover:shadow-md"
+            onClick={() => onClick(blog)}
+        >
+            <div className="relative overflow-hidden">
+                <img
+                    src={blog.image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80'}
+                    alt={blog.title}
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
+                <div className="absolute top-4 left-4">
+                    <span className="bg-[#d4af37] text-white px-2 py-1 rounded text-sm font-semibold">
+                        Blog Post
+                    </span>
+                </div>
+            </div>
+
+            <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-[#d4af37] transition-colors line-clamp-2">
+                    {blog.title}
+                </h3>
+                {blog.subtitle && (
+                    <p className="text-gray-600 mb-3 line-clamp-2">{blog.subtitle}</p>
+                )}
+
+                <div
+                    className="text-gray-500 text-sm mb-4 line-clamp-3"
+                    dangerouslySetInnerHTML={{
+                        __html: truncateText(blog.mainText, 120)
+                    }}
+                />
+
+                <div className="flex items-center justify-between text-sm text-gray-500">
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1">
+                            <User className="w-4 h-4" />
+                            <span>{blog.creator_first_name} {blog.creator_last_name}</span>
                         </div>
-
-                        <div className="p-6 md:p-8">
-                            {/* Project Header */}
-                            <div className="mb-6">
-                                <span className="inline-block bg-[#d4af37] text-white px-3 py-1 rounded-full text-sm font-semibold mb-3">
-                                    {project.category}
-                                </span>
-                                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                                    {project.title}
-                                </h2>
-                                <p className="text-lg text-gray-600 mb-4">{project.client}</p>
-
-                                <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-                                    <div className="flex items-center gap-2">
-                                        <Calendar className="w-4 h-4" />
-                                        <span>{project.duration}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <Users className="w-4 h-4" />
-                                        <span>{project.results.impact}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Results Summary */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
-                                <div className="bg-gray-50 rounded-lg p-4 text-center border border-gray-100">
-                                    <TrendingUp className="w-8 h-8 text-[#d4af37] mx-auto mb-2" />
-                                    <div className="text-2xl font-bold text-gray-900">{project.results.saved}</div>
-                                    <div className="text-sm text-gray-600">Savings/Achieved</div>
-                                </div>
-                                <div className="bg-gray-50 rounded-lg p-4 text-center border border-gray-100">
-                                    <Target className="w-8 h-8 text-[#d4af37] mx-auto mb-2" />
-                                    <div className="text-2xl font-bold text-gray-900">{project.results.achieved}</div>
-                                    <div className="text-sm text-gray-600">Success Rate</div>
-                                </div>
-                                <div className="bg-gray-50 rounded-lg p-4 text-center border border-gray-100">
-                                    <Award className="w-8 h-8 text-[#d4af37] mx-auto mb-2" />
-                                    <div className="text-2xl font-bold text-gray-900">{project.results.impact}</div>
-                                    <div className="text-sm text-gray-600">Impact Scale</div>
-                                </div>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 gap-8">
-                                {/* Left Column */}
-                                <div>
-                                    <div className="mb-6">
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-3">The Challenge</h3>
-                                        <p className="text-gray-600 leading-relaxed">{project.challenge}</p>
-                                    </div>
-
-                                    <div className="mb-6">
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Our Solution</h3>
-                                        <p className="text-gray-600 leading-relaxed">{project.solution}</p>
-                                    </div>
-                                </div>
-
-                                {/* Right Column */}
-                                <div>
-                                    <div className="mb-6">
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Key Outcomes</h3>
-                                        <div className="space-y-3">
-                                            {project.outcomes.map((outcome: string, index: number) => (
-                                                <div key={index} className="flex items-start gap-3">
-                                                    <CheckCircle className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
-                                                    <span className="text-gray-600">{outcome}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Testimonial */}
-                                    <div className="bg-gray-50 rounded-lg p-6 border border-gray-100">
-                                        <div className="flex items-center gap-2 mb-3">
-                                            <BarChart3 className="w-5 h-5 text-[#d4af37]" />
-                                            <h4 className="font-semibold text-gray-900">Client Testimonial</h4>
-                                        </div>
-                                        <p className="text-gray-600 italic">"{project.testimonial}"</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* CTA */}
-                            <div className="mt-8 text-center">
-                                <button className="bg-[#d4af37] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#b8941f] transition-colors inline-flex items-center gap-2">
-                                    Start Similar Project
-                                    <ArrowRight className="w-4 h-4" />
-                                </button>
-                            </div>
+                        <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            <span>{formatDate(blog.created_at)}</span>
                         </div>
                     </div>
-                </motion.div>
-            </motion.div>
-        </AnimatePresence>
+                    <div className="flex items-center gap-1 text-[#d4af37] font-semibold">
+                        <BookOpen className="w-4 h-4" />
+                        <span>Read More</span>
+                    </div>
+                </div>
+            </div>
+        </motion.article>
     );
 };
 
-const PortfolioCard = ({ project, onClick }: any) => (
-    <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-        className="bg-white rounded-lg overflow-hidden border border-gray-100 hover:border-[#d4af37]/30 transition-all cursor-pointer group"
-        onClick={() => onClick(project)}
-    >
-        <div className="relative overflow-hidden">
-            <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
-            <div className="absolute top-4 left-4">
-                <span className="bg-[#d4af37] text-white px-2 py-1 rounded text-sm font-semibold">
-                    {project.category}
-                </span>
-            </div>
-        </div>
+const BlogDetail = ({ blog, onBack }: any) => {
+    const navigate = useNavigate();
+    const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]);
+    const { isPlaying, isPaused, toggle, stop } = useTextToSpeech();
 
-        <div className="p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-[#d4af37] transition-colors">
-                {project.title}
-            </h3>
-            <p className="text-gray-600 mb-4 line-clamp-2">{project.client}</p>
+    useEffect(() => {
+        fetchRelatedBlogs();
 
-            <div className="flex justify-between items-center text-sm text-gray-500 mb-4">
-                <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    <span>{project.duration}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                    <TrendingUp className="w-4 h-4" />
-                    <span className="font-semibold text-[#d4af37]">{project.results.saved}</span>
-                </div>
-            </div>
+        // Cleanup speech synthesis on unmount
+        return () => {
+            stop();
+        };
+    }, [blog]);
 
-            <div className="flex items-center justify-between">
-                <span className="text-[#d4af37] font-semibold text-sm">View Case Study</span>
-                <ExternalLink className="w-4 h-4 text-[#d4af37] group-hover:translate-x-1 transition-transform" />
-            </div>
-        </div>
-    </motion.div>
-);
+    const fetchRelatedBlogs = async () => {
+        try {
+            const response = await mainAxios.get('/blogs/');
+            const otherBlogs = response.data
+                .filter((b: Blog) => b.id !== blog.id)
+                .slice(0, 3);
+            setRelatedBlogs(otherBlogs.map((blog: any) => ({
+                ...blog,
+                image: blog.image ? `${import.meta.env.VITE_API_BASE_URL}${blog.image}` : 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80'
+            })))
+        } catch (error) {
+            console.error('Error fetching related blogs:', error);
+        }
+    };
 
-const PortfolioFilters = ({ activeFilter, onFilterChange }: any) => {
-    const filters = ["All", "Audit & Compliance", "Tax Consultancy", "Business Development", "Training & Capacity Building", "Management Consultancy", "Market Research"];
+    const formatDate = (dateString: string) => {
+        const normalized = dateString.replace(" ", "T") + "Z";
+        const d = new Date(normalized);
+
+        if (isNaN(d.getTime())) return "Invalid Date";
+
+        return d.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
+
+    const shareBlog = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: blog.title,
+                text: blog.subtitle,
+                url: window.location.href,
+            });
+        } else {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard!');
+        }
+    };
+
+    const getReadableText = () => {
+        const title = blog.title || '';
+        const subtitle = blog.subtitle || '';
+        const mainText = blog.mainText ? blog.mainText.replace(/<[^>]*>/g, ' ') : '';
+        return `${title}. ${subtitle}. ${mainText}`;
+    };
+
+    const handleTextToSpeech = () => {
+        toggle(getReadableText());
+    };
 
     return (
-        <div className="flex flex-wrap gap-2 justify-center mb-12">
-            {filters.map((filter) => (
-                <button
-                    key={filter}
-                    onClick={() => onFilterChange(filter)}
-                    className={`px-4 py-2 rounded-full font-semibold transition-colors border ${activeFilter === filter
-                            ? 'bg-[#d4af37] text-white border-[#d4af37]'
-                            : 'bg-white text-gray-600 border-gray-200 hover:border-[#d4af37] hover:text-[#d4af37]'
-                        }`}
-                >
-                    {filter}
-                </button>
-            ))}
+        <div className="min-h-screen bg-gray-50">
+            <Navbar isFull={true} />
+            
+            {/* Blog Header */}
+            <div className="bg-white border-b border-gray-200">
+                <div className="max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <div className="flex items-center justify-between">
+                        <button
+                            onClick={onBack}
+                            className="flex items-center gap-2 text-gray-600 hover:text-[#d4af37] transition-colors"
+                        >
+                            <ArrowLeft className="w-5 h-5" />
+                            <span>Back to Blogs</span>
+                        </button>
+
+                        <div className="flex items-center gap-4">
+                            {/* Text-to-Speech Button */}
+                            <button
+                                onClick={handleTextToSpeech}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-colors ${isPlaying
+                                    ? 'bg-[#d4af37] text-white'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    }`}
+                                title={isPlaying ? (isPaused ? 'Resume reading' : 'Pause reading') : 'Read aloud'}
+                            >
+                                {isPlaying && !isPaused ? (
+                                    <VolumeX className="w-5 h-5" />
+                                ) : (
+                                    <Volume2 className="w-5 h-5" />
+                                )}
+                                <span>{isPlaying ? (isPaused ? 'Resume' : 'Pause') : 'Read Aloud'}</span>
+                            </button>
+
+                            <button
+                                onClick={shareBlog}
+                                className="flex items-center gap-2 text-gray-600 hover:text-[#d4af37] transition-colors"
+                            >
+                                <Share2 className="w-5 h-5" />
+                                <span>Share</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    {/* Main Content */}
+                    <div className="lg:col-span-3">
+                        <article className="bg-white rounded-lg shadow-sm">
+                            {/* Featured Image */}
+                            {blog.image && (
+                                <div className="w-full h-64 md:h-96 overflow-hidden rounded-t-lg">
+                                    <img
+                                        src={blog.image}
+                                        alt={blog.title}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            )}
+
+                            <div className="p-6 md:p-8">
+                                {/* Blog Meta */}
+                                <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                                    <div className="flex items-center gap-1">
+                                        <User className="w-4 h-4" />
+                                        <span>By {blog.creator_first_name} {blog.creator_last_name}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <Calendar className="w-4 h-4" />
+                                        <span>{formatDate(blog.created_at)}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <Clock className="w-4 h-4" />
+                                        <span>5 min read</span>
+                                    </div>
+                                </div>
+
+                                {/* Blog Title */}
+                                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                                    {blog.title}
+                                </h1>
+
+                                {blog.subtitle && (
+                                    <p className="text-xl text-gray-600 mb-6 leading-relaxed">
+                                        {blog.subtitle}
+                                    </p>
+                                )}
+
+                                {/* Blog Content */}
+                                <div
+                                    className="prose prose-lg max-w-none"
+                                    dangerouslySetInnerHTML={{ __html: blog.mainText }}
+                                />
+                            </div>
+                        </article>
+                    </div>
+
+                    {/* Sidebar */}
+                    <div className="lg:col-span-1">
+                        <div className="sticky top-8 space-y-6">
+                            {/* About Author */}
+                            <div className="bg-white rounded-lg shadow-sm p-6">
+                                <h3 className="text-lg font-semibold text-gray-900 mb-4">About the Author</h3>
+                                <div className="flex items-center gap-3 mb-3">
+                                    <div className="w-12 h-12 bg-[#d4af37] rounded-full flex items-center justify-center text-white font-semibold">
+                                        {blog.creator_first_name?.[0]}{blog.creator_last_name?.[0]}
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold text-gray-900">
+                                            {blog.creator_first_name} {blog.creator_last_name}
+                                        </p>
+                                        <p className="text-sm text-gray-500">Financial Expert</p>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-gray-600">
+                                    Experienced financial consultant with expertise in tax optimization,
+                                    business development, and financial strategy.
+                                </p>
+                            </div>
+
+                            {/* Related Blogs */}
+                            <div className="bg-white rounded-lg shadow-sm p-6">
+                                <h3 className="text-lg font-semibold text-gray-900 mb-4">Related Blogs</h3>
+                                <div className="space-y-4">
+                                    {relatedBlogs.map((relatedBlog) => (
+                                        <div
+                                            key={relatedBlog.id}
+                                            className="flex gap-3 cursor-pointer group"
+                                            onClick={() => navigate(`/portfolio/${encodeURIComponent(relatedBlog.title.toLowerCase().replace(/ /g, '-'))}-${relatedBlog.id}`)}
+                                        >
+                                            <img
+                                                src={relatedBlog.image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.1&auto=format&fit=crop&w=100&q=80'}
+                                                alt={relatedBlog.title}
+                                                className="w-16 h-16 object-cover rounded flex-shrink-0"
+                                            />
+                                            <div>
+                                                <h4 className="text-sm font-semibold text-gray-900 group-hover:text-[#d4af37] transition-colors line-clamp-2">
+                                                    {relatedBlog.title}
+                                                </h4>
+                                                <p className="text-xs text-gray-500 mt-1">
+                                                    {formatDate(relatedBlog.created_at)}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Newsletter */}
+                            <div className="bg-gradient-to-br from-[#d4af37] to-[#b8941f] rounded-lg p-6 text-white">
+                                <h3 className="text-lg font-semibold mb-2">Stay Updated</h3>
+                                <p className="text-sm opacity-90 mb-4">
+                                    Get the latest financial insights and business tips delivered to your inbox.
+                                </p>
+                                <div className="space-y-3">
+                                    <input
+                                        type="email"
+                                        placeholder="Enter your email"
+                                        className="w-full px-3 py-2 rounded text-gray-900 text-sm placeholder-gray-500"
+                                    />
+                                    <button className="w-full bg-white text-[#d4af37] py-2 rounded font-semibold text-sm hover:bg-gray-100 transition-colors">
+                                        Subscribe
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <PremiumFooter />
+        </div>
+    );
+};
+
+const PortfolioFilters = ({ activeFilter, onFilterChange, searchQuery, onSearchChange }: any) => {
+    const filters = ["All", "Business", "Finance", "Tax", "Investment", "Strategy"];
+
+    return (
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+            <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+                {/* Search Only - Filters are hidden */}
+                <div className="relative flex-1 w-full lg:max-w-md">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                        type="text"
+                        placeholder="Search blogs..."
+                        value={searchQuery}
+                        onChange={(e) => onSearchChange(e.target.value)}
+                        className="w-full pl-10 pr-4 py-3 bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4af37] border border-gray-200"
+                    />
+                </div>
+
+                {/* Filters Section - Hidden */}
+                <div className="hidden flex-wrap gap-2">
+                    {filters.map((filter) => (
+                        <button
+                            key={filter}
+                            onClick={() => onFilterChange(filter)}
+                            className={`px-4 py-2 rounded-full font-semibold transition-colors border flex items-center gap-2 ${activeFilter === filter
+                                ? 'bg-[#d4af37] text-white border-[#d4af37]'
+                                : 'bg-white text-gray-600 border-gray-200 hover:border-[#d4af37] hover:text-[#d4af37]'
+                                }`}
+                        >
+                            {activeFilter === filter && <Filter className="w-4 h-4" />}
+                            {filter}
+                        </button>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };
 
 const HeroSection = () => (
-    <div className="relative bg-gray-900 min-h-[70vh] flex items-center justify-center">
+    <div className="relative bg-gray-900 min-h-[60vh] flex items-center justify-center">
         {/* Background Image */}
-        <div 
+        <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-                backgroundImage: "url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.1&auto=format&fit=crop&w=2000&q=80')"
+                backgroundImage: "url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.1&auto=format&fit=crop&w=2000&q=80')"
             }}
         />
-        
+
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/50" />
-        
+
         {/* Content */}
         <div className="relative z-10 max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
             <motion.h1
@@ -368,7 +490,7 @@ const HeroSection = () => (
                 transition={{ duration: 0.6 }}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
             >
-                Our Portfolio
+                Business Insights & News
             </motion.h1>
             <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -376,7 +498,7 @@ const HeroSection = () => (
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8"
             >
-                Real-world financial solutions and measurable results for businesses across Rwanda
+                Expert financial analysis, business strategies, and market insights from Carino Group
             </motion.p>
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -385,32 +507,19 @@ const HeroSection = () => (
                 className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-8 text-gray-300"
             >
                 <div className="flex items-center gap-2">
-                    <UserCheck className="w-5 h-5 text-[#d4af37]" />
-                    <span>30+ Projects Completed</span>
+                    <BookOpen className="w-5 h-5 text-[#d4af37]" />
+                    <span>Latest Business Insights</span>
                 </div>
                 <div className="hidden sm:block w-px h-6 bg-gray-400"></div>
                 <div className="flex items-center gap-2">
-                    <DollarSign className="w-5 h-5 text-[#d4af37]" />
-                    <span>100M+ Funding Secured</span>
+                    <TrendingUp className="w-5 h-5 text-[#d4af37]" />
+                    <span>Market Analysis</span>
                 </div>
                 <div className="hidden sm:block w-px h-6 bg-gray-400"></div>
                 <div className="flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-[#d4af37]" />
-                    <span>98% Success Rate</span>
+                    <Users className="w-5 h-5 text-[#d4af37]" />
+                    <span>Expert Contributors</span>
                 </div>
-            </motion.div>
-            
-            {/* CTA Button */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="mt-8"
-            >
-                <button className="bg-[#d4af37] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#b8941f] transition-colors inline-flex items-center gap-2">
-                    View Case Studies
-                    <ArrowRight className="w-4 h-4" />
-                </button>
             </motion.div>
         </div>
     </div>
@@ -418,86 +527,145 @@ const HeroSection = () => (
 
 // Main Portfolio Section Component
 const PortfolioSection = () => {
-    const [selectedProject, setSelectedProject] = useState(null);
+    const { blogSlug } = useParams();
+    const navigate = useNavigate();
+    const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
     const [activeFilter, setActiveFilter] = useState("All");
+    const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
 
-    const filteredProjects = activeFilter === "All"
-        ? portfolioData
-        : portfolioData.filter(project => project.category === activeFilter);
+    useEffect(() => {
+        fetchBlogs();
+    }, []);
+
+    useEffect(() => {
+        if (blogSlug && blogs.length > 0) {
+            const blogId = parseInt(blogSlug.split('-').pop() || '');
+            const blog = blogs.find(b => b.id === blogId);
+            if (blog) {
+                setSelectedBlog(blog);
+            }
+        }
+    }, [blogSlug, blogs]);
+
+    const fetchBlogs = async () => {
+        try {
+            setLoading(true);
+            const response = await mainAxios.get('/blogs/');
+            const blogsData = response.data.map((blog: any) => ({
+                ...blog,
+                image: blog.image ? `${import.meta.env.VITE_API_BASE_URL}${blog.image}` : 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80'
+            }));
+            setBlogs(blogsData);
+        } catch (err: any) {
+            console.error('Error fetching blogs:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleBlogClick = (blog: Blog) => {
+        const slug = `${blog.title.toLowerCase().replace(/ /g, '-')}-${blog.id}`;
+        navigate(`/portfolio/${slug}`);
+    };
+
+    const handleBackToList = () => {
+        navigate('/portfolio');
+        setSelectedBlog(null);
+    };
+
+    const filteredBlogs = blogs.filter(blog => {
+        const matchesSearch = blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            blog.subtitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            blog.mainText.toLowerCase().includes(searchQuery.toLowerCase());
+
+        // Since filters are hidden, always return true for filter matching
+        const matchesFilter = true;
+
+        return matchesSearch && matchesFilter;
+    });
+
+    if (selectedBlog) {
+        return <BlogDetail blog={selectedBlog} onBack={handleBackToList} />;
+    }
 
     return (
-        <div className="min-h-screen bg-white">
-            <Navbar/>
+        <div className="min-h-screen bg-gray-50">
+            <Navbar />
             <HeroSection />
 
-            <div className="py-20 bg-gray-50">
+            <div className="py-12 bg-gray-50">
                 <div className="max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
-                    {/* Filters */}
+                    {/* Filters and Search - Only search is visible now */}
                     <PortfolioFilters
                         activeFilter={activeFilter}
                         onFilterChange={setActiveFilter}
+                        searchQuery={searchQuery}
+                        onSearchChange={setSearchQuery}
                     />
 
-                    {/* Portfolio Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {filteredProjects.map((project) => (
-                            <PortfolioCard
-                                key={project.id}
-                                project={project}
-                                onClick={setSelectedProject}
-                            />
-                        ))}
-                    </div>
+                    {/* Blog Grid */}
+                    {loading ? (
+                        <div className="flex justify-center items-center py-12">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#d4af37]"></div>
+                        </div>
+                    ) : (
+                        <>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredBlogs.map((blog) => (
+                                    <BlogCard
+                                        key={blog.id}
+                                        blog={blog}
+                                        onClick={handleBlogClick}
+                                    />
+                                ))}
+                            </div>
 
-                    {/* Empty State */}
-                    {filteredProjects.length === 0 && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="text-center py-12"
-                        >
-                            <p className="text-gray-500 text-lg">No projects found for the selected filter.</p>
-                        </motion.div>
+                            {/* Empty State */}
+                            {filteredBlogs.length === 0 && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="text-center py-12"
+                                >
+                                    <p className="text-gray-500 text-lg">No blogs found matching your criteria.</p>
+                                </motion.div>
+                            )}
+                        </>
                     )}
 
-                    {/* Stats Summary */}
+                    {/* Stats */}
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
                         viewport={{ once: true }}
-                        className="mt-16 bg-white rounded-2xl p-8 text-center border border-gray-100"
+                        className="mt-16 bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm"
                     >
-                        <h3 className="text-2xl font-bold text-gray-900 mb-6">Portfolio Impact Summary</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Blog Impact</h3>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                             <div>
-                                <div className="text-3xl font-bold text-[#d4af37]">30+</div>
-                                <div className="text-gray-600">Projects Completed</div>
+                                <div className="text-3xl font-bold text-[#d4af37]">{blogs.length}+</div>
+                                <div className="text-gray-600">Articles Published</div>
                             </div>
                             <div>
-                                <div className="text-3xl font-bold text-[#d4af37]">100M+</div>
-                                <div className="text-gray-600">Funding Secured</div>
+                                <div className="text-3xl font-bold text-[#d4af37]">10K+</div>
+                                <div className="text-gray-600">Monthly Readers</div>
                             </div>
                             <div>
-                                <div className="text-3xl font-bold text-[#d4af37]">8M+</div>
-                                <div className="text-gray-600">Tax Savings</div>
+                                <div className="text-3xl font-bold text-[#d4af37]">95%</div>
+                                <div className="text-gray-600">Reader Satisfaction</div>
                             </div>
                             <div>
-                                <div className="text-3xl font-bold text-[#d4af37]">40+</div>
-                                <div className="text-gray-600">Professionals Trained</div>
+                                <div className="text-3xl font-bold text-[#d4af37]">50+</div>
+                                <div className="text-gray-600">Expert Contributors</div>
                             </div>
                         </div>
                     </motion.div>
                 </div>
             </div>
-
-            {/* Project Popup */}
-            <PortfolioPopup
-                project={selectedProject}
-                isOpen={!!selectedProject}
-                onClose={() => setSelectedProject(null)}
-            />
-            <PremiumFooter/>
+            <PremiumFooter />
         </div>
     );
 };

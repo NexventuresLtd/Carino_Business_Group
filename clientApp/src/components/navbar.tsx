@@ -3,7 +3,10 @@ import { useState, useEffect } from 'react';
 import { Menu, X, TrendingUp, PhoneCall } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Navbar = () => {
+interface PropNav {
+    isFull?: boolean
+}
+const Navbar = ({ isFull }: PropNav) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
@@ -19,11 +22,10 @@ const Navbar = () => {
     }, []);
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-            scrolled 
-                ? 'bg-white/95 backdrop-blur-md shadow-lg' 
+        <nav className={`${isFull && !scrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "fixed"} top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+                ? 'bg-white/95 backdrop-blur-md shadow-lg'
                 : 'bg-transparent'
-        }`}>
+            }`}>
             <div className="max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
@@ -35,27 +37,25 @@ const Navbar = () => {
                         <div className="w-8 h-8 bg-gradient-to-br from-[#d4af37] to-[#f5d67b] rounded-full flex items-center justify-center">
                             <TrendingUp className="w-5 h-5 text-[#000000]" />
                         </div>
-                        <span className={`text-xl font-bold transition-colors ${
-                            scrolled ? 'text-[#000000]' : 'text-[#ffffff]'
-                        }`}>
+                        <span className={`text-xl font-bold transition-colors ${(scrolled || isFull) ? 'text-[#000000]' : 'text-[#ffffff]'
+                            }`}>
                             Carino Group
                         </span>
                     </motion.div>
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center gap-8">
-                        {['Home', 'About', 'Services',  'Portfolio', 'Contact'].map((item, index) => (
+                        {['Home', 'About', 'Services', 'Portfolio', 'Contact'].map((item, index) => (
                             <motion.a
                                 key={item}
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
                                 href={`${item.toLowerCase()}`}
-                                className={`transition-colors text-sm font-medium ${
-                                    scrolled 
-                                        ? 'text-[#000000] hover:text-[#d4af37]' 
+                                className={`transition-colors text-sm font-medium ${(scrolled || isFull)
+                                        ? 'text-[#000000] hover:text-[#d4af37]'
                                         : 'text-[#ffffff] hover:text-[#d4af37]'
-                                }`}
+                                    }`}
                             >
                                 {item}
                             </motion.a>
@@ -75,9 +75,8 @@ const Navbar = () => {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className={`md:hidden p-2 transition-colors ${
-                            scrolled ? 'text-[#000000]' : 'text-[#ffffff]'
-                        }`}
+                        className={`md:hidden p-2 transition-colors ${scrolled ? 'text-[#000000]' : 'text-[#ffffff]'
+                            }`}
                     >
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
@@ -94,7 +93,7 @@ const Navbar = () => {
                         className="md:hidden bg-white border-t border-[#d4af37]/20"
                     >
                         <div className="px-4 py-4 space-y-3">
-                            {['Home', 'About', 'Services',  'Portfolio', 'Contact'].map((item) => (
+                            {['Home', 'About', 'Services', 'Portfolio', 'Contact'].map((item) => (
                                 <a
                                     key={item}
                                     href={`${item.toLowerCase()}`}

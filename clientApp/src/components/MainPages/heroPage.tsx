@@ -33,7 +33,7 @@ const Hero = () => {
     };
 
     return (
-        <div className="relative h-[90vh] overflow-hidden">
+        <div className="relative h-screen overflow-hidden">
             {/* Background Image with Slide Change */}
             <div 
                 className="absolute inset-0 bg-cover bg-center transition-all duration-500"

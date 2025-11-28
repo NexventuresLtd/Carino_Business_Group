@@ -7,7 +7,7 @@ def custom_email(name, heading, msg):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centerpiece Dashboard</title>
+    <title>Carino Business Group</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
@@ -107,13 +107,17 @@ def custom_email(name, heading, msg):
             margin: 20px 0;
             font-family: 'Courier New', monospace;
         }}
+        .rwanda-flag {{
+            color: #007a3d;
+            font-weight: 600;
+        }}
     </style>
 </head>
 <body>
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <img src="https://centerpieceltd.com/Centerpiece.png" alt="Centerpiece Group Ltd" />
+            <img src="https://carinobusinessgroup.com/logo.png" alt="Carino Business Group" />
         </div>
 
         <!-- Content -->
@@ -130,19 +134,24 @@ def custom_email(name, heading, msg):
             
             <p style="font-size: 14px; color: #64748b; margin-top: 24px;">
                 Need help? Contact our support team at 
-                <a href="mailto:support@centerpieceltd.com" style="color: #f8ae1f; font-weight: 600;">support@centerpieceltd.com</a>
+                <a href="mailto:support@carinobusinessgroup.com" style="color: #f8ae1f; font-weight: 600;">support@carinobusinessgroup.com</a>
+            </p>
+            
+            <p style="font-size: 14px; color: #64748b; margin-top: 16px;">
+                <i class="fas fa-map-marker-alt" style="color: #f8ae1f; margin-right: 8px;"></i>
+                Serving businesses across <span class="rwanda-flag">Rwanda</span> with professional financial services
             </p>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p>&copy; {datetime.now().year} <span class="highlight">Centerpiece Group Ltd</span>. All rights reserved.</p>
+            <p>&copy; {datetime.now().year} <span class="highlight">Carino Business Group</span>. All rights reserved.</p>
             <p>
-                <a href="https://centerpieceltd.com">Our Website</a> • 
-                <a href="https://centerpieceltd.com/">Privacy Policy</a> • 
-                <a href="https://centerpieceltd.com/">Terms of Service</a>
+                <a href="https://carinobusinessgroup.com">Our Website</a> • 
+                <a href="https://carinobusinessgroup.com/privacy">Privacy Policy</a> • 
+                <a href="https://carinobusinessgroup.com/terms">Terms of Service</a>
             </p>
-            <p>Centerpiece Group Ltd - Financial Management Solutions</p>
+            <p>Streamlining Rwanda's Financial Future - Accounting, Tax & Business Advisory</p>
         </div>
     </div>
 </body>

@@ -1,34 +1,8 @@
 // components/AboutMissionSection.jsx
 import { motion } from 'framer-motion';
-import { Target, Eye, Users, Award, TrendingUp, Shield } from 'lucide-react';
+import { Target, Eye, Users, Shield } from 'lucide-react';
 
 const AboutMissionSection = () => {
-    const missionStats = [
-        {
-            icon: Users,
-            number: "30+",
-            title: "Businesses Served",
-            description: "SMEs, NGOs & Cooperatives"
-        },
-        {
-            icon: TrendingUp,
-            number: "600M+",
-            title: "Revenue Managed",
-            description: "RWF in business revenue"
-        },
-        {
-            icon: Shield,
-            number: "8M+",
-            title: "Tax Savings",
-            description: "RWF saved for clients"
-        },
-        {
-            icon: Award,
-            number: "40+",
-            title: "Professionals Trained",
-            description: "Accountants & Administrators"
-        }
-    ];
 
     const values = [
         {
@@ -91,12 +65,13 @@ const AboutMissionSection = () => {
                             viewport={{ once: true }}
                             className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100"
                         >
+                            <img src="" alt="" />
                             <div className="inline-flex items-center gap-2 bg-primary/20 px-4 py-2 rounded-full mb-6">
                                 <Target className="w-5 h-5 text-primary" />
                                 <span className="text-sm font-semibold text-primary uppercase tracking-wide">
                                     Our Mission
                                 </span>
-                            </div>
+                            </div>  
                             <h3 className="text-2xl font-bold text-secondary mb-6">
                                 Empowering financial excellence across Rwanda
                             </h3>
@@ -114,35 +89,7 @@ const AboutMissionSection = () => {
                         </motion.div>
                     </div>
 
-                    {/* Mission Stats */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        viewport={{ once: true }}
-                        className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16"
-                    >
-                        {missionStats.map((stat, index) => {
-                            const IconComponent = stat.icon;
-                            return (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.1 }}
-                                    viewport={{ once: true }}
-                                    className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-                                >
-                                    <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <IconComponent className="w-8 h-8 text-primary" />
-                                    </div>
-                                    <div className="text-2xl font-bold text-secondary mb-2">{stat.number}</div>
-                                    <div className="font-semibold text-secondary mb-2">{stat.title}</div>
-                                    <div className="text-sm text-[#6b7280]">{stat.description}</div>
-                                </motion.div>
-                            );
-                        })}
-                    </motion.div>
+
                 </div>
             </div>
             {/* Who We Serve Section */}
