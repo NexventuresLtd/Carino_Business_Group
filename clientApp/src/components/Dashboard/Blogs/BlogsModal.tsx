@@ -488,17 +488,7 @@ const BlogManagement: React.FC = () => {
         return truncatedText;
     };
 
-    // Function to strip HTML tags for plain text display (alternative)
-    const stripHtml = (html: string) => {
-        const tmp = document.createElement('DIV');
-        tmp.innerHTML = html;
-        return tmp.textContent || tmp.innerText || '';
-    };
 
-    const truncateText = (text: string, length: number) => {
-        const plainText = stripHtml(text);
-        return plainText.length > length ? plainText.substring(0, length) + '...' : plainText;
-    };
 
     if (loading && blogs.length === 0) {
         return (

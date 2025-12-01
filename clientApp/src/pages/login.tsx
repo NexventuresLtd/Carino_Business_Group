@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, Mail, Lock, TrendingUp, Building2, CheckCircle, Shield, Copy, Check } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, TrendingUp, Building2, CheckCircle, Shield } from 'lucide-react';
 import {  isLoggedIn, loginAll } from '../app/Localstorage';
 import mainAxios from '../Instance/mainAxios';
 

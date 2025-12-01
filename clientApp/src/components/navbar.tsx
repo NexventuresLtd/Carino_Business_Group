@@ -45,13 +45,13 @@ const Navbar = ({ isFull }: PropNav) => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center gap-8">
-                        {['Home', 'About', 'Services', 'Portfolio', 'Contact'].map((item, index) => (
+                        {['Home', 'About', 'Services', 'blog', 'Contact'].map((item, index) => (
                             <motion.a
                                 key={item}
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
-                                href={`${item.toLowerCase()}`}
+                                href={`/${item.toLowerCase()}`}
                                 className={`transition-colors text-sm font-medium ${(scrolled || isFull)
                                         ? 'text-[#000000] hover:text-[#d4af37]'
                                         : 'text-[#ffffff] hover:text-[#d4af37]'
@@ -93,10 +93,10 @@ const Navbar = ({ isFull }: PropNav) => {
                         className="md:hidden bg-white border-t border-[#d4af37]/20"
                     >
                         <div className="px-4 py-4 space-y-3">
-                            {['Home', 'About', 'Services', 'Portfolio', 'Contact'].map((item) => (
+                            {['Home', 'About', 'Services', 'blog', 'Contact'].map((item) => (
                                 <a
                                     key={item}
-                                    href={`${item.toLowerCase()}`}
+                                    href={`/${item.toLowerCase()}`}
                                     className="block text-[#000000] hover:text-[#d4af37] transition-colors py-2 text-center"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >

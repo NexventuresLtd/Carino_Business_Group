@@ -685,7 +685,7 @@ const ClientManagement: React.FC = () => {
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Clients by User</h3>
                   <div className="space-y-3">
-                    {stats.user_breakdown.map((user, index) => (
+                    {stats.user_breakdown.map((user) => (
                       <div key={user.user_id} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                         <span className="font-medium text-gray-900">{user.user_name}</span>
                         <div className="flex items-center gap-4">

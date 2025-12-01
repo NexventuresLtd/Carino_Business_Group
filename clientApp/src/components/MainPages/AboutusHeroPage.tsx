@@ -1,24 +1,8 @@
 // components/AboutHeroSection.jsx
 import { motion } from 'framer-motion';
 import {  Users, ArrowDown } from 'lucide-react';
-import { useState, useEffect } from 'react';
 
 const AboutHeroSection = () => {
-    const [currentStat, setCurrentStat] = useState(0);
-
-    const stats = [
-        { number: "30+", label: "Businesses Empowered" },
-        { number: "600M+", label: "Revenue Managed" },
-        { number: "40+", label: "Professionals Trained" },
-        { number: "8M+", label: "Tax Savings" }
-    ];
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentStat((prev) => (prev + 1) % stats.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, [stats.length]);
 
     const scrollToContent = () => {
         document.getElementById('about-content')?.scrollIntoView({ 
@@ -65,29 +49,6 @@ const AboutHeroSection = () => {
 
          
 
-                        {/* Stats */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5 }}
-                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-4"
-                        >
-                            {stats.slice(0, 4).map((stat) => (
-                                <div key={stat.label} className="text-left">
-                                    <motion.div
-                                        key={currentStat}
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        className="text-2xl sm:text-3xl font-bold text-[#d4af37] mb-1"
-                                    >
-                                        {stat.number}
-                                    </motion.div>
-                                    <div className="text-sm text-gray-400 font-medium">
-                                        {stat.label}
-                                    </div>
-                                </div>
-                            ))}
-                        </motion.div>
 
                         {/* CTA Buttons */}
                         <motion.div

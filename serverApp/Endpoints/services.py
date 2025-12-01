@@ -44,12 +44,12 @@ def get_creator_info(db: Session, user_id: int):
 @router.get("/", response_model=List[ServiceResponse])
 async def get_all_services(
     db: db_dependency,
-    user: user_dependency,
+    # user: user_dependency,
     skip: int = 0,
     limit: int = 100,
     status: Optional[str] = None
 ):
-    user = check_user_authentication(user)
+    # user = check_user_authentication(user)
     
     # Build query
     query = db.query(Services)

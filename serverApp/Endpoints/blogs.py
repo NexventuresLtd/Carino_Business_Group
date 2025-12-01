@@ -245,11 +245,11 @@ def get_creator_info(db: Session, user_id: int):
 @router.get("/", response_model=List[BlogResponse])
 async def get_all_blogs(
     db: db_dependency,
-    user: user_dependency,
+    # user: user_dependency,
     skip: int = 0,
     limit: int = 100
 ):
-    user = check_user_authentication(user)
+    # user = check_user_authentication(user)
     
     blogs = db.query(Blog).offset(skip).limit(limit).all()
     
@@ -278,9 +278,9 @@ async def get_all_blogs(
 async def get_blog(
     blog_id: int,
     db: db_dependency,
-    user: user_dependency
+    # user: user_dependency
 ):
-    user = check_user_authentication(user)
+    # user = check_user_authentication(user)
     
     blog = db.query(Blog).filter(Blog.id == blog_id).first()
     if not blog:

@@ -1,5 +1,5 @@
 // ServicesPage.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
      TrendingUp, Users, Shield, FileText,
@@ -8,9 +8,49 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/navbar';
 import PremiumFooter from '../components/footer';
+import mainAxios from '../Instance/mainAxios';
 
-// Service Data
-const servicesData = [
+// Service Data Structure
+interface Service {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    features: string | string[];
+    status: 'active' | 'inactive';
+    created_at: string;
+    updated_at: string;
+    user_id: number;
+    creator_first_name: string;
+    creator_last_name: string;
+}
+
+// Enhanced Service Data with additional UI properties
+// EnhancedService normalizes features to a string[] for UI usage
+interface EnhancedService extends Service {
+    number: string;
+    shortDescription: string;
+    fullDescription: string;
+    score: string;
+    icon: React.ComponentType<any>;
+    benefits: string[];
+    features: string[]; // ensure enhanced entries expose features as an array
+}
+
+// Default icons mapping
+const serviceIcons = {
+    'Tax Consultancy': Calculator,
+    'Accounting & Bookkeeping': BookOpen,
+    'External Audit Support': Shield,
+    'Business Plan Development': FileText,
+    'Training & Capacity Building': Users,
+    'Management Consultancy': PieChart,
+    'Market Research & Polling': LineChart,
+    'default': TrendingUp
+};
+
+// Default service data as fallback
+const defaultServicesData = [
     {
         id: 1,
         number: "01",
@@ -181,35 +221,12 @@ const servicesData = [
     }
 ];
 
-// Types
-interface Service {
-    id: number;
-    number: string;
-    title: string;
-    shortDescription: string;
-    fullDescription: string;
-    score: string;
-    icon: React.ComponentType<any>;
-    features: string[];
-    benefits: string[];
-}
-
-interface ServicePopupProps {
-    service: Service | null;
-    isOpen: boolean;
-    onClose: () => void;
-}
-
-interface ServiceCardProps {
-    service: Service;
-    onClick: (service: Service) => void;
-}
-
 // Components
-const ServicePopup = ({ service, isOpen, onClose }: ServicePopupProps) => {
+const ServicePopup = ({ service, isOpen, onClose }: { service: EnhancedService | null; isOpen: boolean; onClose: () => void }) => {
     if (!isOpen || !service) return null;
 
     const IconComponent = service.icon;
+    const features = service.features ? (Array.isArray(service.features) ? service.features : (service.features as string).split('\n')) : [];
 
     return (
         <AnimatePresence>
@@ -236,6 +253,9 @@ const ServicePopup = ({ service, isOpen, onClose }: ServicePopupProps) => {
                                 <div>
                                     <h2 className="text-2xl font-bold text-gray-900">{service.title}</h2>
                                     <p className="text-[#d4af37] font-semibold">{service.score}</p>
+                                    <p className="text-lg font-semibold text-gray-700 mt-1">
+                                        {service.price === 0 ? 'Contact for Pricing' : `RWF ${service.price.toLocaleString()}`}
+                                    </p>
                                 </div>
                             </div>
                             <button
@@ -250,34 +270,38 @@ const ServicePopup = ({ service, isOpen, onClose }: ServicePopupProps) => {
                             <div>
                                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Service Overview</h3>
                                 <p className="text-gray-600 leading-relaxed mb-6">
-                                    {service.fullDescription}
+                                    {service.fullDescription || service.description}
                                 </p>
 
-                                <div className="mb-6">
-                                    <h4 className="font-semibold text-gray-900 mb-3">Key Features</h4>
-                                    <div className="space-y-2">
-                                        {service.features.map((feature, index) => (
-                                            <div key={index} className="flex items-center gap-3">
-                                                <CheckCircle className="w-4 h-4 text-[#d4af37] flex-shrink-0" />
-                                                <span className="text-gray-600 text-sm">{feature}</span>
-                                            </div>
-                                        ))}
+                                {features.length > 0 && (
+                                    <div className="mb-6">
+                                        <h4 className="font-semibold text-gray-900 mb-3">Key Features</h4>
+                                        <div className="space-y-2">
+                                            {features.map((feature, index) => (
+                                                <div key={index} className="flex items-center gap-3">
+                                                    <CheckCircle className="w-4 h-4 text-[#d4af37] flex-shrink-0" />
+                                                    <span className="text-gray-600 text-sm">{feature}</span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
 
                             <div>
-                                <div className="bg-gray-50 rounded-lg p-6 mb-6">
-                                    <h4 className="font-semibold text-gray-900 mb-4">Benefits You Get</h4>
-                                    <div className="space-y-3">
-                                        {service.benefits.map((benefit, index) => (
-                                            <div key={index} className="flex items-center gap-3">
-                                                <div className="w-2 h-2 bg-[#d4af37] rounded-full flex-shrink-0"></div>
-                                                <span className="text-gray-600 text-sm">{benefit}</span>
-                                            </div>
-                                        ))}
+                                {service.benefits && service.benefits.length > 0 && (
+                                    <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                                        <h4 className="font-semibold text-gray-900 mb-4">Benefits You Get</h4>
+                                        <div className="space-y-3">
+                                            {service.benefits.map((benefit, index) => (
+                                                <div key={index} className="flex items-center gap-3">
+                                                    <div className="w-2 h-2 bg-[#d4af37] rounded-full flex-shrink-0"></div>
+                                                    <span className="text-gray-600 text-sm">{benefit}</span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 <div className="text-center">
                                     <button className="bg-[#d4af37] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#b8941f] transition-colors w-full">
@@ -296,7 +320,7 @@ const ServicePopup = ({ service, isOpen, onClose }: ServicePopupProps) => {
     );
 };
 
-const ServiceCard = ({ service, onClick }: ServiceCardProps) => {
+const ServiceCard = ({ service, onClick }: { service: EnhancedService; onClick: (service: EnhancedService) => void }) => {
     const IconComponent = service.icon;
 
     return (
@@ -318,8 +342,15 @@ const ServiceCard = ({ service, onClick }: ServiceCardProps) => {
             <h3 className="text-xl font-semibold text-gray-900 mb-3">{service.title}</h3>
             <p className="text-gray-600 leading-relaxed mb-4">{service.shortDescription}</p>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-3">
                 <span className="text-[#d4af37] font-semibold text-sm">{service.score}</span>
+                <span className="text-lg font-bold text-gray-900">
+                    {service.price === 0 ? 'Contact Us' : `RWF ${service.price.toLocaleString()}`}
+                </span>
+            </div>
+
+            <div className="flex items-center justify-between">
+                <span className="text-green-600 text-sm font-medium capitalize">{service.status}</span>
                 <div className="flex items-center gap-1 text-[#d4af37] group-hover:gap-2 transition-all">
                     <span className="text-sm font-semibold">Learn More</span>
                     <ArrowRight className="w-4 h-4" />
@@ -405,7 +436,7 @@ const StatsSection = () => (
     </div>
 );
 
-const ServicesGrid = ({ onServiceClick }: { onServiceClick: (service: Service) => void }) => (
+const ServicesGrid = ({ services, onServiceClick }: { services: EnhancedService[]; onServiceClick: (service: EnhancedService) => void }) => (
     <div className="py-20 bg-white">
         <div className="max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
@@ -424,15 +455,22 @@ const ServicesGrid = ({ onServiceClick }: { onServiceClick: (service: Service) =
                 </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {servicesData.map((service) => (
-                    <ServiceCard
-                        key={service.id}
-                        service={service}
-                        onClick={onServiceClick}
-                    />
-                ))}
-            </div>
+            {services.length === 0 ? (
+                <div className="text-center py-12">
+                    <div className="text-gray-400 text-lg mb-4">No services available at the moment</div>
+                    <div className="text-gray-500">Please check back later or contact us for more information.</div>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    {services.map((service) => (
+                        <ServiceCard
+                            key={service.id}
+                            service={service}
+                            onClick={onServiceClick}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     </div>
 );
@@ -531,16 +569,86 @@ const CTASection = () => (
     </div>
 );
 
+// Utility function to enhance service data with UI properties
+const enhanceServiceData = (services: any[]) => {
+    return services.map((service, index) => {
+        // Find matching default service or use the first one as fallback
+        const defaultService = defaultServicesData.find(ds => 
+            ds.title.toLowerCase() === service.title.toLowerCase()
+        ) || defaultServicesData[index % defaultServicesData.length] || defaultServicesData[0];
+
+        // Get icon based on service title
+        const icon = serviceIcons[service.title as keyof typeof serviceIcons] || serviceIcons.default;
+
+        // Parse features from string to array
+        const features = service.features ? (typeof service.features === 'string' ? service.features.split('\n') : service.features) : defaultService.features;
+
+        return {
+            ...service,
+            number: String(index + 1).padStart(2, '0'),
+            shortDescription: service.description.length > 100 
+                ? service.description.substring(0, 100) + '...' 
+                : service.description,
+            fullDescription: service.description,
+            score: defaultService.score,
+            icon,
+            features,
+            benefits: defaultService.benefits
+        };
+    });
+};
+
 // Main Component
 const ServicesPage = () => {
-    const [selectedService, setSelectedService] = useState<Service | null>(null);
+    const [selectedService, setSelectedService] = useState<EnhancedService | null>(null);
+    const [services, setServices] = useState<EnhancedService[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    error;
+    // Fetch services from backend
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                setLoading(true);
+                const response = await mainAxios.get('/services/');
+                
+                // Filter only active services
+                const activeServices = response.data.filter((service: Service) => service.status === 'active');
+                
+                // Enhance service data with UI properties
+                const enhancedServices = enhanceServiceData(activeServices);
+                setServices(enhancedServices);
+            } catch (err: any) {
+                console.error('Error fetching services:', err);
+                setError('Failed to load services. Please try again later.');
+                // Fallback to default services
+                setServices(enhanceServiceData(defaultServicesData));
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchServices();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-white">
+                <Navbar />
+                <div className="flex items-center justify-center min-h-[60vh]">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#d4af37]"></div>
+                </div>
+                <PremiumFooter />
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-white">
-            <Navbar/>
+            <Navbar />
             <HeroSection />
             <StatsSection />
-            <ServicesGrid onServiceClick={setSelectedService} />
+            <ServicesGrid services={services} onServiceClick={setSelectedService} />
             <WhoWeServe />
             <CTASection />
 
@@ -549,7 +657,7 @@ const ServicesPage = () => {
                 isOpen={!!selectedService}
                 onClose={() => setSelectedService(null)}
             />
-            <PremiumFooter/>
+            <PremiumFooter />
         </div>
     );
 };
