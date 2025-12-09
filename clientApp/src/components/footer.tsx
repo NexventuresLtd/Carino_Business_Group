@@ -1,10 +1,10 @@
 // components/PremiumFooter.jsx
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { 
-    MapPin, 
-    Phone, 
-    Mail, 
-    Linkedin, 
+import {
+    MapPin,
+    Phone,
+    Mail,
+    Linkedin,
     Instagram,
     ArrowUp,
     ChevronRight
@@ -56,36 +56,14 @@ const PremiumFooter = () => {
         {
             title: "Contact",
             links: [
-                { 
-                    name: "KG 123 St, Kimihurura", 
+                {
+                    name: "KG 123 St, Kimihurura",
                     icon: MapPin
                 },
-                { 
-                    name: "+250 788 123 456", 
-                    icon: Phone
-                },
-                { 
-                    name: "hello@carino.rw", 
+                {
+                    name: "hello@carino.rw",
                     icon: Mail
                 }
-            ]
-        },
-        {
-            title: "Services",
-            links: [
-                { name: "Tax Consultancy" },
-                { name: "Accounting" },
-                { name: "Audit Support" },
-                { name: "Business Planning" }
-            ]
-        },
-        {
-            title: "Industries",
-            links: [
-                { name: "Startups & SMEs" },
-                { name: "NGOs" },
-                { name: "Construction" },
-                { name: "Technology" }
             ]
         },
         {
@@ -97,17 +75,35 @@ const PremiumFooter = () => {
                 { name: "Contact" }
             ]
         }
+        , {
+            title: "Services",
+            links: [
+                { name: "Tax Consultancy" },
+                { name: "Accounting" },
+                { name: "Audit Support" },
+                { name: "Business Planning" }
+            ]
+        }
+        ,
+
+
+        {
+            title: "Subscriptions",
+            links: [
+                { name: "Subscribe To Our Newsletter to stay updated on our latest news and offers" },
+            ]
+        }
     ];
 
     const socialLinks = [
-        { 
-            icon: Linkedin, 
-            href: "#", 
+        {
+            icon: Linkedin,
+            href: "#",
             label: "LinkedIn"
         },
-        { 
-            icon: Instagram, 
-            href: "#", 
+        {
+            icon: Instagram,
+            href: "#",
             label: "Instagram"
         }
     ];
@@ -136,7 +132,7 @@ const PremiumFooter = () => {
     };
 
     return (
-        <footer className="relative bg-white text-gray-800 border-t border-gray-100">
+        <footer className="relative bg-gray-50 text-gray-800 border-t border-gray-100">
             {/* Main Footer Content */}
             <div className="max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
                 {/* Grid Layout */}
@@ -156,7 +152,7 @@ const PremiumFooter = () => {
                             <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
                                 {column.title}
                             </h3>
-                            
+
                             <ul className="space-y-2">
                                 {column.links.map((link) => (
                                     <motion.li
@@ -165,7 +161,7 @@ const PremiumFooter = () => {
                                     >
                                         <motion.a
                                             href="#"
-                                            whileHover={{ 
+                                            whileHover={{
                                                 x: 3,
                                                 color: "#1a1a1a",
                                                 transition: { type: "spring", stiffness: 400 }
@@ -198,8 +194,8 @@ const PremiumFooter = () => {
                                                     href={social.href}
                                                     variants={itemVariants}
                                                     custom={index * 0.1}
-                                                    whileHover={{ 
-                                                        scale: 1.1, 
+                                                    whileHover={{
+                                                        scale: 1.1,
                                                         y: -2,
                                                         transition: { type: "spring", stiffness: 400 }
                                                     }}
@@ -212,6 +208,26 @@ const PremiumFooter = () => {
                                             );
                                         })}
                                     </div>
+                                </motion.div>
+                            )}
+                            {column.title === "Subscriptions" && (
+                                <motion.div
+                                    variants={itemVariants}
+                                    className="pt-4 mt-4 border-t border-gray-100"
+                                >
+                                    <form className="flex flex-col sm:flex-row gap-3">
+                                        <input
+                                            type="email"
+                                            placeholder="Your email address"
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                        />
+                                        <button
+                                            type="submit"
+                                            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors duration-200"
+                                        >
+                                            Subscribe
+                                        </button>
+                                    </form>
                                 </motion.div>
                             )}
                         </motion.div>
@@ -228,8 +244,8 @@ const PremiumFooter = () => {
                 >
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         {/* Copyright */}
-                        <motion.div 
-                            variants={itemVariants} 
+                        <motion.div
+                            variants={itemVariants}
                             className="text-center md:text-left"
                         >
                             <p className="text-gray-500 text-sm">
@@ -251,7 +267,7 @@ const PremiumFooter = () => {
                                     href="#"
                                     variants={itemVariants}
                                     custom={index * 0.1}
-                                    whileHover={{ 
+                                    whileHover={{
                                         color: "#1a1a1a",
                                         scale: 1.05
                                     }}

@@ -6,24 +6,31 @@
   font-family: "Didact Gothic", sans-serif;
 
 }
+.poppins {
+  font-family: "Poppins", sans-serif;
+}
 html {
   font-family: "Didact Gothic", sans-serif;
 }
-*{
-   font-family: 'poppins', sans-serif;
-   scroll-behavior: smooth;
-   scroll-padding-top: 2rem;
-   scrollbar-width: thin;
-   scrollbar-color: var(--color-primary) var(--color-secondary);
-   &::-webkit-scrollbar {
-     width: 2px;
-   }
-   &::-webkit-scrollbar-track {
-     background: var(--color-background);
-   }
-   &::-webkit-scrollbar-thumb {
-     background-color: var(--color-primary);
-     border-radius: 20px;
-     border: 3px solid var(--color-background);
-   }
+
+* {
+  font-family: "Didact Gothic", sans-serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-secondary);
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 20px;
+    border: 3px solid var(--color-background);
+  }
 }
