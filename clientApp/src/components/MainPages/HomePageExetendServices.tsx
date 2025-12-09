@@ -142,7 +142,7 @@ const ExtendedServicesSection = () => {
                     </motion.div>
 
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-                        {clientBrands.map((brand, index) => (
+                        {clientBrands.slice(0,5).map((brand, index) => (
                             <motion.div
                                 key={brand}
                                 initial={{ opacity: 0, scale: 0.8 }}
@@ -151,7 +151,7 @@ const ExtendedServicesSection = () => {
                                 viewport={{ once: true }}
                                 className="bg-gray-50 rounded-lg p-4 sm:p-6 text-center hover:shadow-lg transition-all hover:-translate-y-1 border border-gray-200"
                             >
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f5d67b]/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                                <div className="w-10 hidden h-10 sm:w-12 sm:h-12 bg-[#f5d67b]/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                                     <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-[#d4af37]" />
                                 </div>
                                 <h3 className="text-xs sm:text-sm font-semibold text-[#000000] leading-tight">

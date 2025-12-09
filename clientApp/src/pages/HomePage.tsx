@@ -1,3 +1,4 @@
+import Blogsslider from "../components/CompsMain/blogsslider"
 import ModernFooter from "../components/footer"
 import FinanceLandingPage from "../components/MainPages/heroPage"
 import ExtendedServicesSection from "../components/MainPages/HomePageExetendServices"
@@ -10,6 +11,7 @@ const HomePage = () => {
             <Navbar/>
             <FinanceLandingPage />
             <ExtendedServicesSection />
+            <Blogsslider/>
             <ModernFooter/>
         </div>
     )

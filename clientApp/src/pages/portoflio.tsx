@@ -357,7 +357,7 @@ const BlogDetail = ({ blog, onBack }: any) => {
                     <div className="lg:col-span-1">
                         <div className="sticky top-8 space-y-6">
                             {/* About Author */}
-                            <div className="bg-white rounded-lg shadow-sm p-6">
+                            <div className="bg-white rounded-lg shadow-sm p-6 hidden">
                                 <h3 className="text-lg font-semibold text-gray-900 mb-4">About the Author</h3>
                                 <div className="flex items-center gap-3 mb-3">
                                     <div className="w-12 h-12 bg-[#d4af37] rounded-full flex items-center justify-center text-white font-semibold">
@@ -384,7 +384,7 @@ const BlogDetail = ({ blog, onBack }: any) => {
                                         <div
                                             key={relatedBlog.id}
                                             className="flex gap-3 cursor-pointer group"
-                                            onClick={() => navigate(`/portfolio/${encodeURIComponent(relatedBlog.title.toLowerCase().replace(/ /g, '-'))}-${relatedBlog.id}`)}
+                                            onClick={() => navigate(`/blog/${encodeURIComponent(relatedBlog.title.toLowerCase().replace(/ /g, '-'))}-${relatedBlog.id}`)}
                                         >
                                             <img
                                                 src={relatedBlog.image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.1&auto=format&fit=crop&w=100&q=80'}
@@ -414,9 +414,9 @@ const BlogDetail = ({ blog, onBack }: any) => {
                                     <input
                                         type="email"
                                         placeholder="Enter your email"
-                                        className="w-full px-3 py-2 rounded text-gray-900 text-sm placeholder-gray-500"
+                                        className="w-full px-3 py-2 rounded text-gray-900 bg-white text-sm placeholder-gray-500"
                                     />
-                                    <button className="w-full bg-white text-[#d4af37] py-2 rounded font-semibold text-sm hover:bg-gray-100 transition-colors">
+                                    <button onClick={()=>alert("Thanks for subscribing to Carino Business Group Ltd Newslatter")} className="w-full bg-white text-[#d4af37] py-2 rounded font-semibold text-sm hover:bg-gray-100 transition-colors">
                                         Subscribe
                                     </button>
                                 </div>
@@ -567,11 +567,11 @@ const PortfolioSection = () => {
 
     const handleBlogClick = (blog: Blog) => {
         const slug = `${blog.title.toLowerCase().replace(/ /g, '-')}-${blog.id}`;
-        navigate(`/portfolio/${slug}`);
+        navigate(`/blog/${slug}`);
     };
 
     const handleBackToList = () => {
-        navigate('/portfolio');
+        navigate('/blog');
         setSelectedBlog(null);
     };
 
@@ -641,7 +641,7 @@ const PortfolioSection = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
                         viewport={{ once: true }}
-                        className="mt-16 bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm"
+                        className="mt-16 hidden bg-white rounded-2xl p-8 text-center border border-gray-100 shadow-sm"
                     >
                         <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Blog Impact</h3>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">

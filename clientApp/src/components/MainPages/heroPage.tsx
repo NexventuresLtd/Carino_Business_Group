@@ -10,17 +10,17 @@ const Hero = () => {
         {
             title: "Streamlining Rwanda's Financial Future",
             subtitle: "Professional Finance & Business Consulting",
-            bgImage: "url('sml.jpg')"
+            bgImage: "url('/sml.jpg')"
         },
         {
             title: "Building Solid Financial Foundations",
             subtitle: "Accounting & Tax Consultancy",
-            bgImage: "url('sml.jpg')"
+            bgImage: "url('/sml.jpg')"
         },
         {
             title: "Empowering Businesses to Thrive",
             subtitle: "Business Development & Training",
-            bgImage: "url('sml.jpg')"
+            bgImage: "url('/sml.jpg')"
         }
     ];
 

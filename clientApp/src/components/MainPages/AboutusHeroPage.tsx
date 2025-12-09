@@ -11,7 +11,7 @@ const AboutHeroSection = () => {
     };
 
     return (
-        <div className="relative h-[60vh] bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden">
+        <div className="relative min-h-[60vh] bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0">
                 <div className="absolute top-0 left-0 w-72 h-72 bg-[#d4af37] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"></div>
@@ -20,7 +20,7 @@ const AboutHeroSection = () => {
             </div>
 
             {/* Grid Pattern Overlay */}
-           <img src="sml.jpg" className='w-full h-full object-cover object-left-center z-0 absolute' />
+           <img src="/sml.jpg" className='w-full h-full object-cover object-left-center z-0 absolute' />
            <div className='w-full h-full bg-black/70 z-0 absolute' />
             <div className="relative max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -49,13 +49,18 @@ const AboutHeroSection = () => {
 
          
 
-
+                        <p className='max-w-2xl mt-3'>
+                            Welcome to carino busines get to know us one of the best in the wrols kiki the ass
+                            jomunia ywtu soze turyire 
+                            Welcome to carino busines get to know us one of the best in the wrols kiki the ass
+                            jomunia ywtu soze turyire 
+                        </p>
                         {/* CTA Buttons */}
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6 }}
-                            className="flex flex-col sm:flex-row gap-4 pt-4"
+                            className="flex hidden flex-col sm:flex-row gap-4 pt-4"
                         >
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
@@ -78,90 +83,7 @@ const AboutHeroSection = () => {
                         </motion.div>
                     </motion.div>
 
-                    {/* Right Content - Visual Elements */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="relative"
-                    >
-                        {/* Main Card */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.4 }}
-                            className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 relative overflow-hidden"
-                        >
-                            {/* Background Pattern */}
-                            <div className="absolute inset-0 opacity-5">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37] rounded-full blur-2xl"></div>
-                                <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#f5d67b] rounded-full blur-2xl"></div>
-                            </div>
-
-                            <div className="relative space-y-6">
-                                {/* Icon Grid */}
-
-                                {/* Content */}
-                                <div className="space-y-4">
-                                    <motion.h3
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.8 }}
-                                        className="text-2xl font-bold text-white"
-                                    >
-                                        Trusted by Rwanda's Growing Businesses
-                                    </motion.h3>
-                                    
-                                    <motion.p
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.9 }}
-                                        className="text-gray-300 leading-relaxed"
-                                    >
-                                        From startups to established enterprises, we provide the financial 
-                                        clarity and strategic guidance needed to thrive in Rwanda's dynamic 
-                                        economic landscape.
-                                    </motion.p>
-
-                                    {/* Client Logos Placeholder */}
-                                    <motion.div
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ delay: 1.0 }}
-                                        className="flex items-center gap-4 pt-4"
-                                    >
-                                        {[1, 2, 3, 4].map((item) => (
-                                            <div
-                                                key={item}
-                                                className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center"
-                                            >
-                                                <div className="w-8 h-8 bg-[#d4af37]/20 rounded-lg"></div>
-                                            </div>
-                                        ))}
-                                    </motion.div>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Floating Elements */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.2 }}
-                            className="absolute -top-4 -right-4 bg-gradient-to-br from-[#d4af37] to-[#f5d67b] text-gray-900 px-4 py-2 rounded-full font-semibold text-sm shadow-2xl"
-                        >
-                            ✓ Trusted Partner
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.4 }}
-                            className="absolute -bottom-4 -left-4 bg-white/10 backdrop-blur-sm border border-white/10 text-white px-4 py-2 rounded-full font-semibold text-sm"
-                        >
-                            🏆 Excellence Award
-                        </motion.div>
-                    </motion.div>
+            
                 </div>
             </div>
 

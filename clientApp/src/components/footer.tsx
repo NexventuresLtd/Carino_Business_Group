@@ -133,6 +133,7 @@ const PremiumFooter = () => {
 
     return (
         <footer className="relative bg-gray-50 text-gray-800 border-t border-gray-100">
+            <h3 className='text-center py-10 font-bold text-2xl poppins'>Looking for financial advisor? <a href='/contact' className='text-primary font-bold underline underline-offset-8'>Send Message</a></h3>
             {/* Main Footer Content */}
             <div className="max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
                 {/* Grid Layout */}
@@ -149,7 +150,7 @@ const PremiumFooter = () => {
                             variants={itemVariants}
                             className="space-y-4"
                         >
-                            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
+                            <h3 className="text-sm poppins font-semibold text-gray-900 uppercase tracking-wider">
                                 {column.title}
                             </h3>
 

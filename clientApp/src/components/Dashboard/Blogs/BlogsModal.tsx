@@ -47,7 +47,7 @@ const RichTextEditor: React.FC<{
         historyRef.current = historyRef.current.slice(0, historyIndexRef.current + 1);
         historyRef.current.push(content);
         historyIndexRef.current = historyRef.current.length - 1;
-        
+
         // Keep history manageable
         if (historyRef.current.length > 50) {
             historyRef.current.shift();
@@ -205,7 +205,7 @@ const RichTextEditor: React.FC<{
                 >
                     <Redo2 className="w-4 h-4" />
                 </button>
-                
+
                 <div className="w-px bg-gray-300 mx-1" />
 
                 {/* Formatting buttons */}
@@ -213,7 +213,7 @@ const RichTextEditor: React.FC<{
                     if (button.separator) {
                         return <div key={index} className="w-px bg-gray-300 mx-1" />;
                     }
-                    
+
                     const Icon = button.icon as React.ComponentType<any> | undefined;
 
                     return (
@@ -249,7 +249,7 @@ const RichTextEditor: React.FC<{
                     handleInput();
                 }}
                 className="min-h-[400px] p-4 outline-none prose max-w-none overflow-y-auto bg-white"
-                style={{ 
+                style={{
                     fontFamily: 'inherit',
                     fontSize: 'inherit',
                     lineHeight: '1.6'
@@ -312,9 +312,9 @@ const BlogManagement: React.FC = () => {
                 ...blog,
                 image: blog.image ? `${import.meta.env.VITE_API_BASE_URL}${blog.image}` : ''
             }));
-            
+
             setBlogs(blogsData);
-            
+
         } catch (err: any) {
             setError('Failed to fetch blogs');
             console.error('Error fetching blogs:', err);
@@ -393,7 +393,7 @@ const BlogManagement: React.FC = () => {
 
         try {
             const formDataToSend = new FormData();
-            
+
             // Send raw HTML without encoding
             formDataToSend.append('title', formData.title);
             formDataToSend.append('subtitle', formData.subtitle);
@@ -473,17 +473,17 @@ const BlogManagement: React.FC = () => {
         // Create a temporary element to parse HTML
         const temp = document.createElement('div');
         temp.innerHTML = html;
-        
+
         // Get text content for length calculation
         const textContent = temp.textContent || temp.innerText || '';
-        
+
         if (textContent.length <= length) {
             return html; // Return original HTML if within length
         }
-        
+
         // Truncate the text content
         const truncatedText = textContent.substring(0, length) + '...';
-        
+
         // Return the truncated text (you could implement more sophisticated HTML truncation here)
         return truncatedText;
     };
@@ -507,7 +507,7 @@ const BlogManagement: React.FC = () => {
                 </h1>
                 <p className="text-gray-600">
                     Create and manage your blog posts with rich content
-                </p>
+                </p>our blog
             </div>
 
             {/* Error Alert */}
@@ -573,7 +573,7 @@ const BlogManagement: React.FC = () => {
                     )}
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
                     <AnimatePresence>
                         {blogs.map((blog, index) => (
                             <motion.div
@@ -606,10 +606,11 @@ const BlogManagement: React.FC = () => {
                                             </p>
                                         )}
                                         {/* FIXED: Render HTML content properly */}
-                                        <div 
+
+                                        <div
                                             className="text-gray-500 text-sm line-clamp-3"
-                                            dangerouslySetInnerHTML={{ 
-                                                __html: truncateHtml(blog.mainText, 120) 
+                                            dangerouslySetInnerHTML={{
+                                                __html: truncateHtml(blog.mainText, 120)
                                             }}
                                         />
                                     </div>
