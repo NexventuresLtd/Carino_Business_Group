@@ -1,8 +1,8 @@
 // blogs/BlogManagement.tsx
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    Edit, Trash2, Eye, FileText, User,
+    FileText, User,
     ArrowBigRight
 } from 'lucide-react';
 import mainAxios from '../../Instance/mainAxios';
@@ -71,7 +71,7 @@ export default function Blogsslider() {
         // Return the truncated text (you could implement more sophisticated HTML truncation here)
         return truncatedText;
     };
-        const navigate = useNavigate();
+    const navigate = useNavigate();
     const handleBlogClick = (blog: Blog) => {
         const slug = `${blog.title.toLowerCase().replace(/ /g, '-')}-${blog.id}`;
         navigate(`/blog/${slug}`);
@@ -102,7 +102,7 @@ export default function Blogsslider() {
                                     exit={{ opacity: 0, y: -20 }}
                                     transition={{ delay: index * 0.1 }}
                                     className="bg-white rounded-lg overflow-hidden cursor-pointer"
-                                    onClick={()=>handleBlogClick(blog)}
+                                    onClick={() => handleBlogClick(blog)}
                                 >
                                     {/* Blog Image */}
                                     {blog.image && (

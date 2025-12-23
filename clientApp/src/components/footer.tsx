@@ -2,7 +2,6 @@
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import {
     MapPin,
-    Phone,
     Mail,
     Linkedin,
     Instagram,

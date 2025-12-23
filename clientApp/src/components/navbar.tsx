@@ -1,6 +1,6 @@
 // components/Navbar.jsx
 import { useState, useEffect } from 'react';
-import { Menu, X, TrendingUp, PhoneCall } from 'lucide-react';
+import { Menu, X, PhoneCall } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface PropNav {
