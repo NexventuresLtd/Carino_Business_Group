@@ -34,13 +34,7 @@ const Navbar = ({ isFull }: PropNav) => {
                         animate={{ opacity: 1, x: 0 }}
                         className="flex items-center gap-2"
                     >
-                        <div className="w-8 h-8 bg-gradient-to-br from-[#d4af37] to-[#f5d67b] rounded-full flex items-center justify-center">
-                            <TrendingUp className="w-5 h-5 text-[#000000]" />
-                        </div>
-                        <span className={`text-xl font-bold transition-colors ${(scrolled || isFull) ? 'text-[#000000]' : 'text-[#ffffff]'
-                            }`}>
-                            Carino Group
-                        </span>
+                        <img src={`${scrolled? "/black" : "/white"}.png`} className='h-23' alt="Carino Group Logo" />
                     </motion.div>
 
                     {/* Desktop Menu */}
