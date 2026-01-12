@@ -154,13 +154,11 @@ const AboutMissionSection = () => {
                                     Our Vision
                                 </span>
                             </div>
-                            <h2 className="text-2xl font-bold text-secondary leading-tight">
+                            <h2 className="text-2xl hidden font-bold text-secondary leading-tight">
                                 To become Rwanda's most trusted and accessible accounting partner
                             </h2>
                             <p className="text-lg text-[#6b7280] leading-relaxed">
-                                We envision a Rwanda where every business, regardless of size, has access to
-                                professional financial guidance that empowers growth, ensures compliance, and
-                                builds sustainable success in the evolving East African market.
+                               To be Rwanda’s most trusted partner in accounting and business advisory by building strong financial foundations.
                             </p>
                         </motion.div>
 
@@ -170,7 +168,7 @@ const AboutMissionSection = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
                             viewport={{ once: true }}
-                            className="bg-white rounded-2xl p-8 border border-gray-100"
+                            className="bg-white rounded-2xl space-y-8 p-8 border border-gray-100"
                         >
                             <img src="/sml.jpg" alt="" className='h-60 w-full object-cover rounded-lg overflow-hidden' />
                             <div className="inline-flex items-center gap-2 bg-primary/20 mt-2 px-4 py-2 rounded-full mb-6">
@@ -179,18 +177,12 @@ const AboutMissionSection = () => {
                                     Our Mission
                                 </span>
                             </div>
-                            <h3 className="text-2xl font-bold text-secondary mb-6">
+                            <h3 className="text-2xl hidden font-bold text-secondary mb-6">
                                 Empowering financial excellence across Rwanda
                             </h3>
                             <div className="space-y-4">
-                                <p className="text-[#6b7280] leading-relaxed">
-                                    To empower accountants, entrepreneurs, and growing businesses with clear financial
-                                    systems and smart compliance strategies that drive sustainable growth and build
-                                    investor confidence.
-                                </p>
-                                <p className="text-[#6b7280] leading-relaxed">
-                                    We bridge the gap between complex financial regulations and practical business
-                                    needs, making professional accounting accessible to all Rwandan enterprises.
+                                <p className="text-[#6b7280] text-lg leading-relaxed">
+                                  To empower accountants and entrepreneurs with clear financial systems and compliance strategies.
                                 </p>
                             </div>
                         </motion.div>
@@ -218,25 +210,40 @@ const AboutMissionSection = () => {
                         </p>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
                         {[
                             {
-                                title: "Entrepreneurs & Startups",
-                                img: '/sml.jpg',
-                                description: "Navigating taxation, record-keeping, and building solid financial foundations from day one.",
-                                clients: "Early-stage businesses, tech startups, retail entrepreneurs"
+                                title: "Entrepreneurs & startups navigating taxation and record-keepings",
+                                // img: '/sml.jpg',
+                                // description: "Navigating taxation, record-keeping, and building solid financial foundations from day one.",
+                                // clients: "Early-stage businesses, tech startups, retail entrepreneurs"
                             },
                             {
-                                title: "NGOs & Cooperatives",
-                                img: '/sml.jpg',
-                                description: "Audit-readiness, donor compliance, and transparent financial reporting for social impact organizations.",
-                                clients: "Agricultural cooperatives, savings groups, non-profits"
-                            },
+                                title: "NGOs and cooperatives needing audit-readiness",
+                                // img: '/sml.jpg',
+                                // description: "Audit-readiness, donor compliance, and transparent financial reporting for social impact organizations.",
+                                // clients: "Agricultural cooperatives, savings groups, non-profits"
+                            }
+                            ,
                             {
-                                title: "Established Businesses",
-                                img: '/sml.jpg',
-                                description: "Strategic financial management, tax optimization, and growth planning for scaling enterprises.",
-                                clients: "Limited companies, family businesses, growing SMEs"
+                                title: "Established businesses (especially those limited by shares)",
+                                // img: '/sml.jpg',
+                                // description: "Strategic financial management, tax optimization, and growth planning for scaling enterprises.",
+                                // clients: "Limited companies, family businesses, growing SMEs"
+                            }
+                            ,
+                            {
+                                title: "External audit clients seeking clarity, accuracy, and compliance",
+                                // img: '/sml.jpg',
+                                // description: "Strategic financial management, tax optimization, and growth planning for scaling enterprises.",
+                                // clients: "Limited companies, family businesses, growing SMEs"
+                            }
+                            ,
+                            {
+                                title: "Aspiring accountants through professional training programs",
+                                // img: '/sml.jpg',
+                                // description: "Strategic financial management, tax optimization, and growth planning for scaling enterprises.",
+                                // clients: "Limited companies, family businesses, growing SMEs"
                             }
                         ].map((segment, index) => (
                             <motion.div
@@ -247,19 +254,19 @@ const AboutMissionSection = () => {
                                 viewport={{ once: true }}
                                 className="bg-gray-50 rounded-xl p-8 hover:bg-gray-750 transition-all group border border-gray-300"
                             >
-                                <img src={segment.img} alt={segment.title} className="h-60 w-full object-cover rounded-lg overflow-hidden" />
-                                <div className="w-12 h-12 bg-primary/20 mt-2 rounded-full flex items-center justify-center mb-6">
+                                {/* <img src={segment.img} alt={segment.title} className="h-60 w-full object-cover rounded-lg overflow-hidden" /> */}
+                                {/* <div className="w-12 h-12 bg-primary/20 mt-2 rounded-full flex items-center justify-center mb-6">
                                     <Users className="w-6 h-6 text-primary" />
-                                </div>
+                                </div> */}
                                 <h3 className="text-xl font-bold text-gray-700 mb-4">
                                     {segment.title}
                                 </h3>
-                                <p className="text-gray-500 mb-6 leading-relaxed">
+                                {/* <p className="text-gray-500 mb-6 leading-relaxed">
                                     {segment.description}
                                 </p>
                                 <div className="text-sm text-primary font-semibold">
                                     {segment.clients}
-                                </div>
+                                </div> */}
                             </motion.div>
                         ))}
                     </div>

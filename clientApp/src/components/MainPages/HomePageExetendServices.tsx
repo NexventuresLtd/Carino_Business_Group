@@ -1,27 +1,32 @@
 // components/ExtendedServicesSection.jsx
 import { motion } from 'framer-motion';
 import { Shield, Lightbulb, BookOpen, Calculator } from 'lucide-react';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+// @ts-ignore: importing CSS without type declarations
+import "swiper/css";
+
 
 const ExtendedServicesSection = () => {
     const extendedServices = [
         {
             number: "01",
             title: "The Foundation (Compliance)",
-            description: " Ensure accuracy and peace of mind with smart tax solutions, precise bookkeeping, and external audit support to keep your business audit-compliant.",
+            description: " Accurate bookkeeping, smart tax solutions, and audit support to keep your business compliant and stress-free.",
             score: "40+ TRAINED",
             icon: Calculator
         },
         {
             number: "02",
             title: "Financial Compliance",
-            description: "Ensure accuracy and peace of mind with smart tax solutions, precise bookkeeping, and external audit support to keep your business audit-compliant.",
+            description: "We ensure regulatory compliance and audit readiness, helping your business avoid risks and operate smoothly.",
             score: "95% EFFICIENCY",
             icon: Shield
         },
         {
             number: "03",
             title: "The People (Capacity)",
-            description: "Empower modern accountants and entrepreneurs with practical skills training and development to master financial systems and strategies.",
+            description: "Practical training that empowers accountants and entrepreneurs to master financial systems and strategies.",
             score: "100M+ FUNDED",
             icon: Lightbulb
         }
@@ -140,26 +145,39 @@ const ExtendedServicesSection = () => {
                             their financial goals and compliance requirements.
                         </p>
                     </motion.div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-                        {clientBrands.slice(0,5).map((brand, index) => (
-                            <motion.div
-                                key={brand}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: index * 0.05, duration: 0.4 }}
-                                viewport={{ once: true }}
-                                className="bg-gray-50 rounded-lg p-4 sm:p-6 text-center hover:shadow-lg transition-all hover:-translate-y-1 border border-gray-200"
-                            >
-                                <div className="w-10 hidden h-10 sm:w-12 sm:h-12 bg-[#f5d67b]/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                                    <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-[#d4af37]" />
-                                </div>
-                                <h3 className="text-xs sm:text-sm font-semibold text-[#000000] leading-tight">
-                                    {brand}
-                                </h3>
-                            </motion.div>
+                    <Swiper
+                        modules={[Autoplay]}
+                        spaceBetween={16}
+                        slidesPerView={2}
+                        autoplay={{
+                            delay: 2500,
+                            disableOnInteraction: false,
+                        }}
+                        breakpoints={{
+                            640: { slidesPerView: 3 },
+                            1024: { slidesPerView: 4 },
+                            1280: { slidesPerView: 5 },
+                        }}
+                    >
+                        {clientBrands.map((brand, index) => (
+                            <SwiperSlide key={brand}>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: index * 0.05, duration: 0.4 }}
+                                    viewport={{ once: true }}
+                                    className="bg-gray-50 rounded-lg p-4 sm:p-6 text-center hover:shadow-lg transition-all hover:-translate-y-1 border border-gray-200"
+                                >
+                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f5d67b]/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                                        <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-[#d4af37]" />
+                                    </div>
+                                    <h3 className="text-xs sm:text-sm font-semibold text-black leading-tight">
+                                        {brand}
+                                    </h3>
+                                </motion.div>
+                            </SwiperSlide>
                         ))}
-                    </div>
+                    </Swiper>
 
                 </div>
             </div>
