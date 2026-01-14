@@ -118,6 +118,7 @@ const ExtendedServicesSection = () => {
                             for their financial management and business development needs.
                         </p>
                         <motion.button
+                            onClick={() => window.location.href = "/contact"}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="bg-[white] text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-md font-semibold hover:bg-[#f5d67b] transition-all shadow-lg hover:shadow-xl uppercase tracking-wide text-sm sm:text-base"
@@ -148,10 +149,16 @@ const ExtendedServicesSection = () => {
                     <Swiper
                         modules={[Autoplay]}
                         spaceBetween={16}
+                        navigation={{
+                            nextEl: "bg-red-100 text-red-500",
+                            prevEl: ".custom-prev",
+                        }}
                         slidesPerView={2}
+
+
                         autoplay={{
                             delay: 2500,
-                            disableOnInteraction: false,
+                            disableOnInteraction: true,
                         }}
                         breakpoints={{
                             640: { slidesPerView: 3 },

@@ -81,6 +81,7 @@ const Hero = () => {
                                 and business development services tailored to Rwanda's unique financial ecosystem.
                             </motion.p>
                             <motion.button
+                            onClick={()=>window.location.href = "/contact"}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.5 }}

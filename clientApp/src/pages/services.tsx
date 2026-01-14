@@ -476,68 +476,86 @@ const ServicesGrid = ({ services, onServiceClick }: { services: EnhancedService[
 );
 
 const WhoWeServe = () => (
-    <div className="py-20 bg-gray-50">
-        <div className="max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="text-center mb-16"
-            >
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    Who We Serve
-                </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                    We specialize in serving diverse business structures across Rwanda's 
-                    growing economic landscape.
-                </p>
-            </motion.div>
+            <div className="relative py-20 bg-gray-100">
+                <div className="max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-3xl sm:text-4xl font-bold text-gray-700 mb-4">
+                            Who We Serve
+                        </h2>
+                        <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+                            We specialize in serving diverse business structures across Rwanda's
+                            growing economic landscape.
+                        </p>
+                    </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {[
-                    {
-                        title: "Entrepreneurs & Startups",
-                        description: "Navigating taxation, record-keeping, and building solid financial foundations from day one.",
-                        icon: UsersIcon
-                    },
-                    {
-                        title: "NGOs & Cooperatives",
-                        description: "Audit-readiness, donor compliance, and transparent financial reporting for social impact organizations.",
-                        icon: Shield
-                    },
-                    {
-                        title: "Established Businesses",
-                        description: "Strategic financial management, tax optimization, and growth planning for scaling enterprises.",
-                        icon: TrendingUp
-                    },
-                    {
-                        title: "Aspiring Accountants",
-                        description: "Professional training and capacity building in modern accounting practices and software.",
-                        icon: BookOpen
-                    }
-                ].map((item, index) => {
-                    const IconComponent = item.icon;
-                    return (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            className="bg-white rounded-lg p-6 text-center border border-gray-100"
-                        >
-                            <div className="w-16 h-16 bg-[#d4af37] rounded-full flex items-center justify-center mx-auto mb-4">
-                                <IconComponent className="w-8 h-8 text-white" />
-                            </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>
-                            <p className="text-gray-600 leading-relaxed">{item.description}</p>
-                        </motion.div>
-                    );
-                })}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+                        {[
+                            {
+                                title: "Entrepreneurs & startups navigating taxation and record-keepings",
+                                // img: '/sml.jpg',
+                                // description: "Navigating taxation, record-keeping, and building solid financial foundations from day one.",
+                                // clients: "Early-stage businesses, tech startups, retail entrepreneurs"
+                            },
+                            {
+                                title: "NGOs and cooperatives needing audit-readiness",
+                                // img: '/sml.jpg',
+                                // description: "Audit-readiness, donor compliance, and transparent financial reporting for social impact organizations.",
+                                // clients: "Agricultural cooperatives, savings groups, non-profits"
+                            }
+                            ,
+                            {
+                                title: "Established businesses (especially those limited by shares)",
+                                // img: '/sml.jpg',
+                                // description: "Strategic financial management, tax optimization, and growth planning for scaling enterprises.",
+                                // clients: "Limited companies, family businesses, growing SMEs"
+                            }
+                            ,
+                            {
+                                title: "External audit clients seeking clarity, accuracy, and compliance",
+                                // img: '/sml.jpg',
+                                // description: "Strategic financial management, tax optimization, and growth planning for scaling enterprises.",
+                                // clients: "Limited companies, family businesses, growing SMEs"
+                            }
+                            ,
+                            {
+                                title: "Aspiring accountants through professional training programs",
+                                // img: '/sml.jpg',
+                                // description: "Strategic financial management, tax optimization, and growth planning for scaling enterprises.",
+                                // clients: "Limited companies, family businesses, growing SMEs"
+                            }
+                        ].map((segment, index) => (
+                            <motion.div
+                                key={segment.title}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.2 }}
+                                viewport={{ once: true }}
+                                className="bg-gray-50 rounded-xl p-8 hover:bg-gray-750 transition-all group border border-gray-300"
+                            >
+                                {/* <img src={segment.img} alt={segment.title} className="h-60 w-full object-cover rounded-lg overflow-hidden" /> */}
+                                {/* <div className="w-12 h-12 bg-primary/20 mt-2 rounded-full flex items-center justify-center mb-6">
+                                    <Users className="w-6 h-6 text-primary" />
+                                </div> */}
+                                <h3 className="text-xl font-bold text-gray-700 mb-4">
+                                    {segment.title}
+                                </h3>
+                                {/* <p className="text-gray-500 mb-6 leading-relaxed">
+                                    {segment.description}
+                                </p>
+                                <div className="text-sm text-primary font-semibold">
+                                    {segment.clients}
+                                </div> */}
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 );
 
 const CTASection = () => (
@@ -557,7 +575,7 @@ const CTASection = () => (
                     for professional financial management and business development services.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button className="bg-white text-[#d4af37] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    <button onClick={()=>window.location.href = "/contact"} className="bg-white text-[#d4af37] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                         Get Free Consultation
                     </button>
                     <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#d4af37] transition-colors">
