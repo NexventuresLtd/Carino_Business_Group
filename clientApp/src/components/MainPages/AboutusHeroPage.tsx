@@ -49,9 +49,9 @@ const AboutHeroSection = () => {
 
          
 
-                        <p className='max-w-2xl mt-3'>
+                        <p className='max-w-2xl mt-3 hidden'>
                             Welcome to carino busines get to know us one of the best in the wrols kiki the ass
-                            jomunia ywtu soze turyire 
+                            jomunia ywtu soze turyire   
                             Welcome to carino busines get to know us one of the best in the wrols kiki the ass
                             jomunia ywtu soze turyire 
                         </p>

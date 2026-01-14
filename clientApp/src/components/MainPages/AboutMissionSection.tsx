@@ -7,23 +7,18 @@ const AboutMissionSection = () => {
     const values = [
         {
             icon: Target,
-            title: "Precision & Accuracy",
-            description: "Every number tells a story. We ensure your financial data is accurate, compliant, and tells the right story to stakeholders and regulators."
+            title: "Integrity",
+            description: "We uphold honesty and transparency in every financial decision."
         },
         {
             icon: Eye,
-            title: "Transparency",
-            description: "Clear, honest communication about your financial position. No hidden fees, no surprises - just straightforward professional service."
+            title: "Excellence",
+            description: "We deliver precise, professional, and reliable results."
         },
         {
             icon: Users,
-            title: "Partnership",
-            description: "We don't just service clients; we build partnerships. Your success is our success, and we're invested in your growth journey."
-        },
-        {
-            icon: Shield,
-            title: "Compliance First",
-            description: "Rwanda's financial landscape is evolving. We stay ahead of regulatory changes to keep your business compliant and penalty-free."
+            title: "Accountability",
+            description: "We take responsibility for every number and outcome."
         }
     ];
 
@@ -32,21 +27,13 @@ const AboutMissionSection = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-gray-100 w-11/12 m-auto px-10">
                 <div className="words">
                     <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
+                        // initial={{ opacity: 0, x: -50 }}
+                        // animate={{ opacity: 1, x: 0 }}
+                        // transition={{ duration: 0.8 }}
                         className="space-y-6 px-4 sm:px-6 lg:px-8 py-20"
                     >
-                        <h2 className="text-3xl sm:text-4xl font-bold text-secondary mb-4">
-                            Our Mission & Vision
-                        </h2>
-                        <p className="text-lg text-[#6b7280] leading-relaxed">
-                            At Carino Business Group, our mission is to empower Rwandan businesses with
-                            accessible, professional accounting services that drive growth, ensure compliance,
-                            and build investor confidence. We envision a future where every enterprise,
-                            regardless of size, has the financial clarity and strategic guidance needed to
-                            thrive in Rwanda's dynamic economic landscape.
-                        </p>
+                     <img src="https://static.vecteezy.com/system/resources/previews/053/205/411/non_2x/trust-and-assurance-hand-symbol-minimalistic-hand-and-checkmark-illustration-vector.jpg" alt="" className='w-full h-90 rounded-2xl object-cover ' />
+                       
                     </motion.div>
                 </div>
                 {/* Right Content - Visual Elements */}
@@ -291,7 +278,7 @@ const AboutMissionSection = () => {
                         </p>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                         {values.map((value, index) => {
                             const IconComponent = value.icon;
                             return (

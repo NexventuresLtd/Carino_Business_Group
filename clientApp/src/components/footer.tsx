@@ -69,7 +69,7 @@ const PremiumFooter = () => {
             title: "Company",
             links: [
                 { name: "About" },
-                { name: "Careers" },
+                // { name: "Careers" },
                 { name: "Blog" },
                 { name: "Contact" }
             ]
@@ -160,7 +160,7 @@ const PremiumFooter = () => {
                                         variants={itemVariants}
                                     >
                                         <motion.a
-                                            href="#"
+                                            href={`/${link.name.toLowerCase()}`}
                                             whileHover={{
                                                 x: 3,
                                                 color: "#1a1a1a",

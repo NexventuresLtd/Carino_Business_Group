@@ -58,6 +58,7 @@ const Navbar = ({ isFull }: PropNav) => {
 
                     {/* CTA Button */}
                     <motion.button
+                        onClick={()=>{window.location.href="/contact"}}
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         className="hidden md:flex items-center gap-2 bg-[#d4af37] text-[white] px-6 py-2 rounded-md hover:bg-[#f5d67b] transition-all font-bold"
