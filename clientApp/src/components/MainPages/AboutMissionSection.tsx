@@ -1,6 +1,6 @@
 // components/AboutMissionSection.jsx
 import { motion } from 'framer-motion';
-import { Target, Eye, Users, Shield } from 'lucide-react';
+import { Target, Eye, Users } from 'lucide-react';
 
 const AboutMissionSection = () => {
 

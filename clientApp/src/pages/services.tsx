@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
      TrendingUp, Users, Shield, FileText,
     X, CheckCircle, ArrowRight, 
-    BookOpen, Calculator, PieChart, LineChart, Users as UsersIcon
+    BookOpen, Calculator, PieChart, LineChart
 } from 'lucide-react';
 import Navbar from '../components/navbar';
 import PremiumFooter from '../components/footer';
