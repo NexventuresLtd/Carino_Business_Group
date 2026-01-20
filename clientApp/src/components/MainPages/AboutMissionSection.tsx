@@ -133,7 +133,7 @@ const AboutMissionSection = () => {
                             viewport={{ once: true }}
                             className="space-y-8"
                         >
-                            <img src="https://advanced-technology.eu/images/2023/10/18/vission.png" alt="" className='h-90 w-full object-cover rounded-lg overflow-hidden' />
+                            {/* <img src="https://advanced-technology.eu/images/2023/10/18/vission.png" alt="" className='h-90 w-full object-cover rounded-lg overflow-hidden' /> */}
 
                             <div className="inline-flex items-center gap-2 bg-primary/20 px-4 py-2 rounded-full">
                                 <Eye className="w-5 h-5 text-primary" />
@@ -157,7 +157,7 @@ const AboutMissionSection = () => {
                             viewport={{ once: true }}
                             className="bg-white rounded-2xl space-y-8 p-8"
                         >
-                            <img src="https://i0.wp.com/wellcaregt.com/wp-content/uploads/2023/03/our-mission.png?fit=1024%2C655&ssl=1" alt="" className='h-90 w-full object-contain rounded-lg overflow-hidden' />
+                            {/* <img src="https://i0.wp.com/wellcaregt.com/wp-content/uploads/2023/03/our-mission.png?fit=1024%2C655&ssl=1" alt="" className='h-90 w-full object-contain rounded-lg overflow-hidden' /> */}
                             <div className="inline-flex items-center gap-2 bg-primary/20 mt-2 px-4 py-2 rounded-full mb-6">
                                 <Target className="w-5 h-5 text-primary" />
                                 <span className="text-sm font-semibold text-primary uppercase tracking-wide">
