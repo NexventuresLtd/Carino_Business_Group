@@ -20,7 +20,7 @@ const AboutHeroSection = () => {
             </div>
 
             {/* Grid Pattern Overlay */}
-           <img src="/sml.jpg" className='w-full h-full object-cover object-left-center z-0 absolute' />
+           <img src="https://www.kahuzibieganationalparkcongo.org/wp-content/uploads/2024/08/kigali.webp" className='w-full h-full object-cover object-left-center z-0 absolute' />
            <div className='w-full h-full bg-black/70 z-0 absolute' />
             <div className="relative max-w-11/12 mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

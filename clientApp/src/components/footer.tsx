@@ -6,7 +6,8 @@ import {
     Linkedin,
     Instagram,
     ArrowUp,
-    ChevronRight
+    ChevronRight,
+    PhoneCall
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -58,6 +59,10 @@ const PremiumFooter = () => {
                 {
                     name: "KG 123 St, Kimihurura",
                     icon: MapPin
+                },
+                {
+                    name: "+250 788 123 456",
+                    icon: PhoneCall
                 },
                 {
                     name: "hello@carino.rw",
