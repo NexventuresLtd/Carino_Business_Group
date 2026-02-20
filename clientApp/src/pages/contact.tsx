@@ -50,7 +50,7 @@ const ContactPage = () => {
         {
             icon: Phone,
             title: "Call Us",
-            details: ["+250 788 123 456", "+250 789 987 654"],
+            details: ["+250 788 771 301", "+250 789 987 654"],
             description: "Available Monday to Friday, 8:00 AM - 5:00 PM"
         },
         {

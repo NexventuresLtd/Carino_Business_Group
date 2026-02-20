@@ -52,7 +52,7 @@ const Navbar: React.FC<{
           <div className="hidden md:flex items-center gap-6 text-sm">
             <div className="flex items-center gap-2 text-gray-700">
               <Phone className="w-4 h-4 text-[#d4af37]" />
-              <span>+250 788 123 456</span>
+              <span>+250 788 771 301</span>
             </div>
             <div className="flex items-center gap-2 text-gray-700">
               <MapPin className="w-4 h-4 text-[#d4af37]" />

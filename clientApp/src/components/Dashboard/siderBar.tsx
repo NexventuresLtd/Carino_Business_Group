@@ -148,7 +148,7 @@ const Sidebar: React.FC<{
               </div>
               <div className="flex items-center gap-2 text-[#d4af37] text-sm">
                 <Phone className="w-4 h-4" />
-                <span>+250 788 123 456</span>
+                <span>+250 788 771 301</span>
               </div>
             </div>
           </div>

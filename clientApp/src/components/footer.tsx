@@ -61,7 +61,7 @@ const PremiumFooter = () => {
                     icon: MapPin
                 },
                 {
-                    name: "+250 788 123 456",
+                    name: "+250 788 771 301",
                     icon: PhoneCall
                 },
                 {
