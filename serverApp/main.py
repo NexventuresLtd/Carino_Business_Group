@@ -29,9 +29,9 @@ app = FastAPI(
     license_info={
         "name": "Proprietary",
     },
-    # docs_url=None,          # disables Swagger UI
-    # redoc_url=None,         # disables ReDoc
-    # openapi_url=None  
+    docs_url=None,          # disables Swagger UI
+    redoc_url=None,         # disables ReDoc
+    openapi_url=None  
 )
 
 # In-memory store (for demo, use Redis in production)
@@ -97,7 +97,6 @@ async def read_root():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CARINO BUSINESS GROUP | Streamlining Rwanda's Financial Future</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
@@ -167,13 +166,13 @@ async def read_root():
                 
                 <div class="md:w-1/3 flex flex-col justify-center">
                     <div class="space-y-4">
-                        <a href="/docs" class="block w-full text-center px-6 py-3 bg-dark-yellow hover:bg-amber-700 text-white rounded-lg shadow-lg transition duration-300 font-medium">
+                        <a href="https://carinobusiness.com/" class="block w-full text-center px-6 py-3 bg-dark-yellow hover:bg-amber-700 text-white rounded-lg shadow-lg transition duration-300 font-medium">
                             Interactive Docs
                         </a>
-                        <a href="/redoc" class="block w-full text-center px-6 py-3 bg-dark-blue hover:bg-blue-900 text-white rounded-lg shadow-lg transition duration-300 font-medium">
+                        <a href="https://carinobusiness.com/" class="block w-full text-center px-6 py-3 bg-dark-blue hover:bg-blue-900 text-white rounded-lg shadow-lg transition duration-300 font-medium">
                             ReDoc Documentation
                         </a>
-                        <a href="#" class="block w-full text-center px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg shadow-lg transition duration-300 font-medium">
+                        <a href="https://carinobusiness.com/" class="block w-full text-center px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg shadow-lg transition duration-300 font-medium">
                             API Status
                         </a>
                     </div>
